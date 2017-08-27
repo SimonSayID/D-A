@@ -171,6 +171,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 } else {
                     node->data = backup->data;
                     node->left = backup->left;
+                    stacks_avl_push(stacks, node);
                     free(backup);
                     backup = NULL;
                 }
@@ -206,11 +207,21 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             avl_node_t *check = stacks_avl_top(stacks);
             check->height = max(avl_height(check->left), avl_height(check->right)) + 1;
             if (avl_height(check->left) - avl_height(check->right) == 2) {
-                check = right_rotation(check);
-                rotation_flag = 1;
+                if (avl_height(check->left->left) == -1) {
+                    check = left_right_rotation(check);
+                    rotation_flag = 2;
+                } else {
+                    check = right_rotation(check);
+                    rotation_flag = 1;
+                }
             } else if (avl_height(check->right) - avl_height(check->left) == 2) {
-                check = left_rotation(check);
-                rotation_flag = 2;
+                if (avl_height(check->right->right) == -1) {
+                    check = right_left_rotation(check);
+                    rotation_flag = 1;
+                } else {
+                    check = left_rotation(check);
+                    rotation_flag = 2;
+                }
             }
             stacks_avl_pop(stacks);
             avl_node_t *child_adjust = stacks_avl_top(stacks);
