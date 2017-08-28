@@ -57,6 +57,7 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
         new->data = data;
         new->left = new->right = NULL;
+        new->height = 0;
         stacks_t *stacks = stacks_avl_init();
         int flag = 0;
         do {
