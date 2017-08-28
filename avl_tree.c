@@ -247,3 +247,20 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
         return node;
     }
 }
+
+avl_node_t* avl_search(avl_node_t *node, int data){
+    if (node->data == data) {
+        return node;
+    }
+    while (node != NULL && node->data != data){
+        if (node->data > data) {
+            node = node->left;
+        } else if (node->data < data) {
+            node = node->right;
+        }
+    }
+    if (node != NULL) {
+        return node;
+    }
+    return NULL;
+}

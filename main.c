@@ -28,6 +28,11 @@ int main() {
     root = avl_delete(root, 10);
     root = avl_delete(root, 11);
     root = avl_delete(root, 12);
+    avl_node_t *node = avl_search(root, 22);
+    node = avl_search(root, 20);
+    node = avl_search(root, 17);
+    node = avl_search(root, 12);
+    node = avl_search(root, 3);
     printf("done\n");
     return 0;
 }
