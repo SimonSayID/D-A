@@ -7,8 +7,6 @@
 
 typedef struct avl_node_s avl_node_t;
 typedef struct stack_avl_s stack_avl_t;
-typedef struct stacks_s stacks_t;
-
 
 int max(int a, int b);
 
