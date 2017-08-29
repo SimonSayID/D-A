@@ -9,7 +9,7 @@
 
 struct stack_avl_s {
     avl_node_t       *node;
-    stack_avl_t         *next;
+    stack_avl_t      *next;
 };
 
 stack_avl_t* stacks_avl_init();
