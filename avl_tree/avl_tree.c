@@ -252,8 +252,6 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
 
             free(stack_avl);
             stack_avl = NULL;
-        } else {
-            return NULL; // not found
         }
 
         return node;
