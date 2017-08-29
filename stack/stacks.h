@@ -7,27 +7,10 @@
 
 #include "../main.h"
 
-struct stacks_s {
-    void          *data;
-    stacks_t      *next;
-};
-
 struct stack_avl_s {
     avl_node_t       *node;
     stack_avl_t         *next;
 };
-
-void stack_test();
-
-stacks_t* stack_init();
-
-void stack_push(stacks_t* stack, void *data);
-
-stacks_t* stack_top(stacks_t* stack);
-
-void stack_pop(stacks_t *stack);
-
-void stack_clean(stacks_t *stack);
 
 stack_avl_t* stacks_avl_init();
 
