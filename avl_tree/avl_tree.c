@@ -62,15 +62,14 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
 
         stack_avl_t *stacks = stacks_avl_init();
         do {
+            stacks_avl_push(stacks, node);
             if (node->data > data) {
-                stacks_avl_push(stacks, node);
                 if (node->left == NULL) {
                     node->left = new;
                     break;
                 }
                 node = node->left;
             } else if (node->data < data) {
-                stacks_avl_push(stacks, node);
                 if (node->right == NULL) {
                     node->right = new;
                     break;
@@ -101,7 +100,6 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
                     rb = right_left_rotation(rb);
                 }
             }
-            rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
 
             stacks_avl_pop(stacks);
             avl_node_t *rbp = stacks_avl_top(stacks);
@@ -167,47 +165,44 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 }
 
             }
-                /* no child */
-            else if (temp->left == NULL && temp->right == NULL) {
+            else {
 
                 avl_node_t *parent = stacks_avl_top(stack_avl);
-                if (parent != NULL) {
-                    if (parent->right == temp) {
-                        parent->right = NULL;
-                    } else {
-                        parent->left = NULL;
+
+                    /* no child */
+                 if (temp->left == NULL && temp->right == NULL) {
+                    if (parent != NULL) {
+                        if (parent->right == temp) {
+                            parent->right = NULL;
+                        } else {
+                            parent->left = NULL;
+                        }
                     }
                 }
-            }
-                /* left child */
-            else if (temp->left != NULL && temp->right == NULL) {
-
-                avl_node_t *parent = stacks_avl_top(stack_avl);
-                if (parent != NULL) {
-                    if (parent->right == temp) {
-                        parent->right = temp->left;
+                     /* left child */
+                 else if (temp->left != NULL && temp->right == NULL) {
+                    if (parent != NULL) {
+                        if (parent->right == temp) {
+                            parent->right = temp->left;
+                        } else {
+                            parent->left = temp->left;
+                        }
                     } else {
-                        parent->left = temp->left;
+                        node = temp->left;
                     }
-                } else {
-                    node = temp->left;
                 }
-
-            }
-                /* right child */
-            else if (temp->left == NULL && temp->right != NULL) {
-
-                avl_node_t *parent = stacks_avl_top(stack_avl);
-                if (parent != NULL) {
-                    if (parent->right == temp) {
-                        parent->right = temp->right;
+                    /* right child */
+                 else if (temp->left == NULL && temp->right != NULL) {
+                    if (parent != NULL) {
+                        if (parent->right == temp) {
+                            parent->right = temp->right;
+                        } else {
+                            parent->left = temp->right;
+                        }
                     } else {
-                        parent->left = temp->right;
+                        node = temp->right;
                     }
-                } else {
-                    node = temp->right;
                 }
-
             }
 
             free(temp);
