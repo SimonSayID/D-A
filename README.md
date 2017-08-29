@@ -15,11 +15,11 @@ avl_tree (non-recursive)
 
 -init
 
--insert
+-insert (duplicate node won't insert)
 
--delete
+-delete (remain unchanged if the node want to delete does not exist)
 
--search
+-search (return NULL if the node does not exist)
 
 -test (insert and delete 100000 nodes, decrease/increase both) 
 
