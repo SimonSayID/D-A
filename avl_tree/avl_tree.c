@@ -233,8 +233,6 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     }
                 }
 
-                rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
-
                 stacks_avl_pop(stack_avl);
 
                 if (stack_avl->next != NULL) {
