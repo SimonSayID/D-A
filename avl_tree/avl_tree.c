@@ -2,7 +2,7 @@
 // Created by simon on 8/27/17.
 //
 
-#include "main.h"
+#include "../main.h"
 
 static int avl_height(avl_node_t *node){
     if (node != NULL) {
