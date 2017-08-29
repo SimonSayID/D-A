@@ -32,4 +32,6 @@ avl_node_t* avl_delete(avl_node_t *node, int data);
 
 avl_node_t* avl_search(avl_node_t *node, int data);
 
+void avl_tree_test();
+
 #endif //ALG_AVL_TREE_H
