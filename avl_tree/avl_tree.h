@@ -5,7 +5,7 @@
 #ifndef ALG_AVL_TREE_H
 #define ALG_AVL_TREE_H
 
-#include "main.h"
+#include "../main.h"
 
 struct avl_node_s {
     int           data;
