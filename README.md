@@ -21,4 +21,6 @@ avl_tree (non-recursive)
 
 -search
 
+-test (insert and delete 100000 nodes, decrease/increase both) 
 
+-memory test detail see the test_result_picture

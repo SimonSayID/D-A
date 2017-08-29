@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "config.h"
-#include "stacks.h"
-#include "avl_tree.h"
+#include <stacks.h>
+#include <avl_tree.h>
 
 #endif //ALG_MAIN_H
