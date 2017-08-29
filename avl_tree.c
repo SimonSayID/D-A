@@ -54,12 +54,13 @@ avl_node_t* avl_tree_init(int data) {
 
 avl_node_t* avl_insert(avl_node_t *node, int data){
     if (node != NULL) {
+
         avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
         new->data = data;
         new->left = new->right = NULL;
         new->height = 0;
+
         stack_avl_t *stacks = stacks_avl_init();
-        int rotation_flag = 0;
         do {
             if (node->data > data) {
                 stacks_avl_push(stacks, node);
@@ -82,46 +83,39 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             new = NULL;
             goto end;
         }
+
         while (stacks->next != NULL) {
-            avl_node_t *check = stacks_avl_top(stacks);
-            if (avl_height(check->left)
-                - avl_height(check->right) == 2){
-                if (data < check->left->data) {
-                    check = right_rotation(check);
+            avl_node_t *rb = stacks_avl_top(stacks);
+            avl_node_t *save = rb;
+
+            if (avl_height(rb->left) - avl_height(rb->right) == 2){
+                if (data < rb->left->data) {
+                    rb = right_rotation(rb);
                 } else {
-                    check = left_right_rotation(check);
+                    rb = left_right_rotation(rb);
                 }
-                rotation_flag = 1;
-            } else if (avl_height(check->right)
-                       - avl_height(check->left) == 2) {
-                if (data > check->right->data) {
-                    check = left_rotation(check);
+            } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
+                if (data > rb->right->data) {
+                    rb = left_rotation(rb);
                 } else {
-                    check = right_left_rotation(check);
+                    rb = right_left_rotation(rb);
                 }
-                rotation_flag = 2;
             }
-            check->height = max(avl_height(check->left),
-                                avl_height(check->right)) + 1;
+            rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
+
             stacks_avl_pop(stacks);
-            avl_node_t *temp = stacks_avl_top(stacks);
-            if (temp != NULL) {
-                switch (rotation_flag) {
-                    case 1:
-                        temp->left = check;
-                        break;
-                    case 2:
-                        temp->right = check;
-                        break;
-                    default:
-                        break;
+            avl_node_t *rbp = stacks_avl_top(stacks);
+            if (rbp != NULL) {
+                if (rbp->right == save) {
+                    rbp->right = rb;
+                } else {
+                    rbp->left = rb;
                 }
-                temp->height = max(avl_height(temp->left),
-                                   avl_height(temp->right)) + 1;
+                rbp->height = max(avl_height(rbp->left), avl_height(rbp->right)) + 1;
                 continue;
             }
-            node = check;
-            rotation_flag = 0;
+
+            node = rb;
         }
         end:
         free(stacks);
@@ -244,13 +238,13 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 stacks_avl_pop(stack_avl);
 
                 if (stack_avl->next != NULL) {
-                    avl_node_t *p = stacks_avl_top(stack_avl);
-                    if (p->right == save) {
-                        p->right = rb;
+                    avl_node_t *rbp = stacks_avl_top(stack_avl);
+                    if (rbp->right == save) {
+                        rbp->right = rb;
                     } else {
-                        p->left = rb;
+                        rbp->left = rb;
                     }
-                    p->height = max(avl_height(p->left), avl_height(p->right)) + 1;
+                    rbp->height = max(avl_height(rbp->left), avl_height(rbp->right)) + 1;
                 } else {
                     node = rb;
                 }
@@ -259,7 +253,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             free(stack_avl);
             stack_avl = NULL;
         } else {
-            return NULL;
+            return NULL; // not found
         }
 
         return node;
@@ -284,6 +278,8 @@ avl_node_t* avl_search(avl_node_t *node, int data){
     return NULL;
 }
 
+/*********for learning***********/
+// test node number = 22;
 static void avl_tree_test1() {
     avl_node_t *root = avl_tree_init(1);
     root = avl_insert(root, 2);
@@ -475,10 +471,58 @@ static void avl_tree_test4() {
     root = avl_delete(root, 2);
     root = avl_delete(root, 1);
 }
+/*********for learning***********/
+
+/***********for test*************/
+// test node number = 100000;
+static void avl_tree_test5() {
+    avl_node_t *root = avl_tree_init(0);
+    for (int i = 1; i <= 100000; ++i) {
+        root = avl_insert(root, i);
+    }
+    for (int j = 100000; j >= 0; --j) {
+        root = avl_delete(root, j);
+    }
+}
+
+static void avl_tree_test6() {
+    avl_node_t *root = avl_tree_init(0);
+    for (int j = 100000; j > 0; --j) {
+        root = avl_insert(root, j);
+    }
+    for (int i = 0; i <= 100000; ++i) {
+        root = avl_delete(root, i);
+    }
+}
+
+static void avl_tree_test7() {
+    avl_node_t *root = avl_tree_init(0);
+    for (int i = 1; i <= 100000; ++i) {
+        root = avl_insert(root, i);
+    }
+    for (int i = 0; i <= 100000; ++i) {
+        root = avl_delete(root, i);
+    }
+}
+
+static void avl_tree_test8() {
+    avl_node_t *root = avl_tree_init(0);
+    for (int j = 100000; j > 0; --j) {
+        root = avl_insert(root, j);
+    }
+    for (int j = 100000; j >= 0; --j) {
+        root = avl_delete(root, j);
+    }
+}
+/***********for test*************/
 
 void avl_tree_test(){
-    avl_tree_test1();
-    avl_tree_test2();
-    avl_tree_test3();
-    avl_tree_test4();
+//    avl_tree_test1();
+//    avl_tree_test2();
+//    avl_tree_test3();
+//    avl_tree_test4();
+//    avl_tree_test5();
+//    avl_tree_test6();
+//    avl_tree_test7();
+//    avl_tree_test8();
 }
