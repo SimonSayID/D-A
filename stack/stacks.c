@@ -3,7 +3,7 @@
 //
 
 #include <assert.h>
-#include "main.h"
+#include "../main.h"
 
 stacks_t* stack_init(){
     stacks_t *stack = (stacks_t *) malloc(sizeof(stack));

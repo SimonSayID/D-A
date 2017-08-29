@@ -5,7 +5,7 @@
 #ifndef ALG_STACKS_H
 #define ALG_STACKS_H
 
-#include "main.h"
+#include "../main.h"
 
 struct stacks_s {
     void          *data;
