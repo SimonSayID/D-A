@@ -8,21 +8,21 @@
 #include "../main.h"
 
 struct avl_node_s {
-    int           data;
-    int           height;
     avl_node_t    *left;
     avl_node_t    *right;
+    int           data;
+    int           height;
 };
 
 static int avl_height(avl_node_t *node);
 
-static avl_node_t* left_rotation(avl_node_t *node);
+static avl_node_t* avl_left_rotation(avl_node_t *node);
 
-static avl_node_t* right_rotation(avl_node_t *node);
+static avl_node_t* avl_right_rotation(avl_node_t *node);
 
-static avl_node_t* left_right_rotation(avl_node_t *node);
+static avl_node_t* avl_left_right_rotation(avl_node_t *node);
 
-static avl_node_t* right_left_rotation(avl_node_t *node);
+static avl_node_t* avl_right_left_rotation(avl_node_t *node);
 
 avl_node_t* avl_tree_init(int data);
 

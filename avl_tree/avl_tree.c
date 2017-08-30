@@ -11,7 +11,7 @@ static int avl_height(avl_node_t *node){
     return -1;
 }
 
-static avl_node_t* left_rotation(avl_node_t *node){
+static avl_node_t* avl_left_rotation(avl_node_t *node){
 
     avl_node_t *temp = node->right;
     node->right = temp->left;
@@ -23,7 +23,7 @@ static avl_node_t* left_rotation(avl_node_t *node){
     return temp;
 }
 
-static avl_node_t* right_rotation(avl_node_t *node){
+static avl_node_t* avl_right_rotation(avl_node_t *node){
 
     avl_node_t *temp = node->left;
     node->left = temp->right;
@@ -35,14 +35,14 @@ static avl_node_t* right_rotation(avl_node_t *node){
     return temp;
 }
 
-static avl_node_t* left_right_rotation(avl_node_t *node){
-    node->left = left_rotation(node->left);
-    return right_rotation(node);
+static avl_node_t* avl_left_right_rotation(avl_node_t *node){
+    node->left = avl_left_rotation(node->left);
+    return avl_right_rotation(node);
 }
 
-static avl_node_t* right_left_rotation(avl_node_t *node){
-    node->right = right_rotation(node->right);
-    return left_rotation(node);
+static avl_node_t* avl_right_left_rotation(avl_node_t *node){
+    node->right = avl_right_rotation(node->right);
+    return avl_left_rotation(node);
 }
 
 avl_node_t* avl_tree_init(int data) {
@@ -84,20 +84,22 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         }
 
         while (stacks->next != NULL) {
+
             avl_node_t *rb = stacks_avl_top(stacks);
+            rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
             avl_node_t *save = rb;
 
             if (avl_height(rb->left) - avl_height(rb->right) == 2){
                 if (data < rb->left->data) {
-                    rb = right_rotation(rb);
+                    rb = avl_right_rotation(rb);
                 } else {
-                    rb = left_right_rotation(rb);
+                    rb = avl_left_right_rotation(rb);
                 }
             } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
                 if (data > rb->right->data) {
-                    rb = left_rotation(rb);
+                    rb = avl_left_rotation(rb);
                 } else {
-                    rb = right_left_rotation(rb);
+                    rb = avl_right_left_rotation(rb);
                 }
             }
 
@@ -216,15 +218,15 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 rb->height = max(avl_height(rb->left), avl_height(rb->right));
                 if (avl_height(rb->left) - avl_height(rb->right) == 2) {
                     if (avl_height(rb->left->right) - avl_height(rb->left->left) == 2) {
-                        rb = left_right_rotation(rb);
+                        rb = avl_left_right_rotation(rb);
                     } else {
-                        rb = right_rotation(rb);
+                        rb = avl_right_rotation(rb);
                     }
                 } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
                     if (avl_height(rb->right->left) - avl_height(rb->right->right) == 2) {
-                        rb = right_left_rotation(rb);
+                        rb = avl_right_left_rotation(rb);
                     } else {
-                        rb = left_rotation(rb);
+                        rb = avl_left_rotation(rb);
                     }
                 }
 
