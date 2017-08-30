@@ -213,9 +213,9 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             while (stack_avl->next != NULL) {
 
                 avl_node_t *rb = stacks_avl_top(stack_avl);
+                rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
                 avl_node_t *save = rb;
 
-                rb->height = max(avl_height(rb->left), avl_height(rb->right));
                 if (avl_height(rb->left) - avl_height(rb->right) == 2) {
                     if (avl_height(rb->left->right) - avl_height(rb->left->left) == 2) {
                         rb = avl_left_right_rotation(rb);
