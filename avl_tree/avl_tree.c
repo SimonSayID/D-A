@@ -79,7 +79,6 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         } while (node->data != data);
         if (node->data == data) {
             free(new);
-            new = NULL;
             goto end;
         }
 
@@ -90,13 +89,13 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             avl_node_t *save = rb;
 
             if (avl_height(rb->left) - avl_height(rb->right) == 2){
-                if (data < rb->left->data) {
+                if (avl_height(rb->left->left) - avl_height(rb->left->right) == 1) {
                     rb = avl_right_rotation(rb);
                 } else {
                     rb = avl_left_right_rotation(rb);
                 }
             } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
-                if (data > rb->right->data) {
+                if (avl_height(rb->right->right) - avl_height(rb->right->left) == 1) {
                     rb = avl_left_rotation(rb);
                 } else {
                     rb = avl_right_left_rotation(rb);
@@ -119,7 +118,6 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         }
         end:
         free(stacks);
-        stacks = NULL;
         return node;
     }
     return NULL;
@@ -142,6 +140,11 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             /* root */
             if (temp->left != NULL && temp->right != NULL){
 
+                int empty = 0;
+                if (stack_avl->next == NULL) {
+                    empty = 1;
+                }
+
                 avl_node_t *s = temp;
                 temp = temp->left; // temp's left subtree root
                 stacks_avl_push(stack_avl, temp);
@@ -152,17 +155,22 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 }
 
                 s->data = temp->data;
+                stacks_avl_pop(stack_avl);
 
                 if (temp != s->left) {
                     avl_node_t *tp = stacks_avl_top(stack_avl);
                     tp->right = temp->left; //left subtree maximum node's parent adjustment
+                    if (empty) {
+                        stacks_avl_pop(stack_avl);
+                        stacks_avl_push(stack_avl, s);
+                        stacks_avl_push(stack_avl, tp);
+                    }
                 } else {
                     if (temp->left != NULL) {
                         s->left = temp->left;
                     } else {
                         s->left = NULL;
                     }
-                    stacks_avl_pop(stack_avl);
                     stacks_avl_push(stack_avl, s);
                 }
 
@@ -179,6 +187,11 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                         } else {
                             parent->left = NULL;
                         }
+                    } else {
+                        free(temp);
+                        free(stack_avl);
+                        node = NULL;
+                        return node;
                     }
                 }
                      /* left child */
@@ -208,7 +221,6 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             }
 
             free(temp);
-            temp = NULL;
 
             while (stack_avl->next != NULL) {
 
@@ -217,13 +229,13 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 avl_node_t *save = rb;
 
                 if (avl_height(rb->left) - avl_height(rb->right) == 2) {
-                    if (avl_height(rb->left->right) - avl_height(rb->left->left) == 2) {
+                    if (avl_height(rb->left->right) - avl_height(rb->left->left) == 1) {
                         rb = avl_left_right_rotation(rb);
                     } else {
                         rb = avl_right_rotation(rb);
                     }
                 } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
-                    if (avl_height(rb->right->left) - avl_height(rb->right->right) == 2) {
+                    if (avl_height(rb->right->left) - avl_height(rb->right->right) == 1) {
                         rb = avl_right_left_rotation(rb);
                     } else {
                         rb = avl_left_rotation(rb);
@@ -246,11 +258,9 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             }
 
             free(stack_avl);
-            stack_avl = NULL;
         }
 
         return node;
-
     }
 }
 
@@ -269,253 +279,4 @@ avl_node_t* avl_search(avl_node_t *node, int data){
         return node;
     }
     return NULL;
-}
-
-/*********for learning***********/
-// test node number = 22;
-static void avl_tree_test1() {
-    avl_node_t *root = avl_tree_init(1);
-    root = avl_insert(root, 2);
-    root = avl_insert(root, 3);
-    root = avl_insert(root, 4);
-    root = avl_insert(root, 5);
-    root = avl_insert(root, 6);
-    root = avl_insert(root, 7);
-    root = avl_insert(root, 8);
-    root = avl_insert(root, 9);
-    root = avl_insert(root, 10);
-    root = avl_insert(root, 11);
-    root = avl_insert(root, 12);
-    root = avl_insert(root, 13);
-    root = avl_insert(root, 14);
-    root = avl_insert(root, 15);
-    root = avl_insert(root, 16);
-    root = avl_insert(root, 17);
-    root = avl_insert(root, 18);
-    root = avl_insert(root, 19);
-    root = avl_insert(root, 20);
-    root = avl_insert(root, 21);
-    root = avl_insert(root, 22);
-
-    root = avl_delete(root, 1);
-    root = avl_delete(root, 2);
-    root = avl_delete(root, 3);
-    root = avl_delete(root, 4);
-    root = avl_delete(root, 5);
-    root = avl_delete(root, 6);
-    root = avl_delete(root, 7);
-    root = avl_delete(root, 8);
-    root = avl_delete(root, 9);
-    root = avl_delete(root, 10);
-    root = avl_delete(root, 11);
-    root = avl_delete(root, 12);
-    root = avl_delete(root, 13);
-    root = avl_delete(root, 14);
-    root = avl_delete(root, 15);
-    root = avl_delete(root, 16);
-    root = avl_delete(root, 18);
-    root = avl_delete(root, 19);
-    root = avl_delete(root, 20);
-    root = avl_delete(root, 21);
-    root = avl_delete(root, 22);
-    root = avl_delete(root, 17);
-}
-
-static void avl_tree_test2() {
-    avl_node_t* root = avl_tree_init(22);
-    root = avl_insert(root, 21);
-    root = avl_insert(root, 20);
-    root = avl_insert(root, 19);
-    root = avl_insert(root, 18);
-    root = avl_insert(root, 17);
-    root = avl_insert(root, 16);
-    root = avl_insert(root, 15);
-    root = avl_insert(root, 14);
-    root = avl_insert(root, 13);
-    root = avl_insert(root, 12);
-    root = avl_insert(root, 11);
-    root = avl_insert(root, 10);
-    root = avl_insert(root, 9);
-    root = avl_insert(root, 8);
-    root = avl_insert(root, 7);
-    root = avl_insert(root, 6);
-    root = avl_insert(root, 5);
-    root = avl_insert(root, 4);
-    root = avl_insert(root, 3);
-    root = avl_insert(root, 2);
-    root = avl_insert(root, 1);
-
-    root = avl_delete(root, 1);
-    root = avl_delete(root, 2);
-    root = avl_delete(root, 3);
-    root = avl_delete(root, 4);
-    root = avl_delete(root, 5);
-    root = avl_delete(root, 6);
-    root = avl_delete(root, 7);
-    root = avl_delete(root, 8);
-    root = avl_delete(root, 9);
-    root = avl_delete(root, 10);
-    root = avl_delete(root, 11);
-    root = avl_delete(root, 12);
-    root = avl_delete(root, 13);
-    root = avl_delete(root, 14);
-    root = avl_delete(root, 15);
-    root = avl_delete(root, 16);
-    root = avl_delete(root, 17);
-    root = avl_delete(root, 18);
-    root = avl_delete(root, 19);
-    root = avl_delete(root, 20);
-    root = avl_delete(root, 21);
-    root = avl_delete(root, 22);
-}
-
-static void avl_tree_test3() {
-    avl_node_t*root = avl_tree_init(1);
-    root = avl_insert(root, 2);
-    root = avl_insert(root, 3);
-    root = avl_insert(root, 4);
-    root = avl_insert(root, 5);
-    root = avl_insert(root, 6);
-    root = avl_insert(root, 7);
-    root = avl_insert(root, 8);
-    root = avl_insert(root, 9);
-    root = avl_insert(root, 10);
-    root = avl_insert(root, 11);
-    root = avl_insert(root, 12);
-    root = avl_insert(root, 13);
-    root = avl_insert(root, 14);
-    root = avl_insert(root, 15);
-    root = avl_insert(root, 16);
-    root = avl_insert(root, 17);
-    root = avl_insert(root, 18);
-    root = avl_insert(root, 19);
-    root = avl_insert(root, 20);
-    root = avl_insert(root, 21);
-    root = avl_insert(root, 22);
-
-    root = avl_delete(root, 22);
-    root = avl_delete(root, 21);
-    root = avl_delete(root, 20);
-    root = avl_delete(root, 19);
-    root = avl_delete(root, 18);
-    root = avl_delete(root, 17);
-    root = avl_delete(root, 16);
-    root = avl_delete(root, 15);
-    root = avl_delete(root, 14);
-    root = avl_delete(root, 13);
-    root = avl_delete(root, 12);
-    root = avl_delete(root, 11);
-    root = avl_delete(root, 10);
-    root = avl_delete(root, 9);
-    root = avl_delete(root, 8);
-    root = avl_delete(root, 7);
-    root = avl_delete(root, 6);
-    root = avl_delete(root, 5);
-    root = avl_delete(root, 4);
-    root = avl_delete(root, 3);
-    root = avl_delete(root, 2);
-    root = avl_delete(root, 1);
-}
-
-static void avl_tree_test4() {
-    avl_node_t*root = avl_tree_init(22);
-    root = avl_insert(root, 21);
-    root = avl_insert(root, 20);
-    root = avl_insert(root, 19);
-    root = avl_insert(root, 18);
-    root = avl_insert(root, 17);
-    root = avl_insert(root, 16);
-    root = avl_insert(root, 15);
-    root = avl_insert(root, 14);
-    root = avl_insert(root, 13);
-    root = avl_insert(root, 12);
-    root = avl_insert(root, 11);
-    root = avl_insert(root, 10);
-    root = avl_insert(root, 9);
-    root = avl_insert(root, 8);
-    root = avl_insert(root, 7);
-    root = avl_insert(root, 6);
-    root = avl_insert(root, 5);
-    root = avl_insert(root, 4);
-    root = avl_insert(root, 3);
-    root = avl_insert(root, 2);
-    root = avl_insert(root, 1);
-
-    root = avl_delete(root, 22);
-    root = avl_delete(root, 21);
-    root = avl_delete(root, 20);
-    root = avl_delete(root, 19);
-    root = avl_delete(root, 18);
-    root = avl_delete(root, 17);
-    root = avl_delete(root, 16);
-    root = avl_delete(root, 15);
-    root = avl_delete(root, 14);
-    root = avl_delete(root, 13);
-    root = avl_delete(root, 12);
-    root = avl_delete(root, 11);
-    root = avl_delete(root, 10);
-    root = avl_delete(root, 9);
-    root = avl_delete(root, 8);
-    root = avl_delete(root, 7);
-    root = avl_delete(root, 6);
-    root = avl_delete(root, 5);
-    root = avl_delete(root, 4);
-    root = avl_delete(root, 3);
-    root = avl_delete(root, 2);
-    root = avl_delete(root, 1);
-}
-/*********for learning***********/
-
-/***********for test*************/
-// test node number = 100000;
-static void avl_tree_test5() {
-    avl_node_t *root = avl_tree_init(0);
-    for (int i = 1; i <= 100000; ++i) {
-        root = avl_insert(root, i);
-    }
-    for (int j = 100000; j >= 0; --j) {
-        root = avl_delete(root, j);
-    }
-}
-
-static void avl_tree_test6() {
-    avl_node_t *root = avl_tree_init(0);
-    for (int j = 100000; j > 0; --j) {
-        root = avl_insert(root, j);
-    }
-    for (int i = 0; i <= 100000; ++i) {
-        root = avl_delete(root, i);
-    }
-}
-
-static void avl_tree_test7() {
-    avl_node_t *root = avl_tree_init(0);
-    for (int i = 1; i <= 100000; ++i) {
-        root = avl_insert(root, i);
-    }
-    for (int i = 0; i <= 100000; ++i) {
-        root = avl_delete(root, i);
-    }
-}
-
-static void avl_tree_test8() {
-    avl_node_t *root = avl_tree_init(0);
-    for (int j = 100000; j > 0; --j) {
-        root = avl_insert(root, j);
-    }
-    for (int j = 100000; j >= 0; --j) {
-        root = avl_delete(root, j);
-    }
-}
-/***********for test*************/
-
-void avl_tree_test(){
-//    avl_tree_test1();
-//    avl_tree_test2();
-//    avl_tree_test3();
-//    avl_tree_test4();
-//    avl_tree_test5();
-//    avl_tree_test6();
-//    avl_tree_test7();
-//    avl_tree_test8();
 }
