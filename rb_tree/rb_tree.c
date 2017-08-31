@@ -98,10 +98,10 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
             if (new->parent != NULL) {
                 if (rb_is_red(new->parent)) {
                     rb_node_t *grandparent = new->parent->parent;
+                    rb_node_t *save = grandparent;
                     if (grandparent != NULL) {
                         int parent_direction = 0;
                         int node_direction = 0;
-                        int recover_direction = 0;
                         if (grandparent->left == new->parent) {
                             parent_direction = 1;
                         }
@@ -119,7 +119,6 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
 
                             if (node_direction) {
                                 grandparent = rb_right_rotation(grandparent);
-                                recover_direction = 1;
                             } else {
                                 grandparent = rb_left_right_rotation(grandparent);
                             }
@@ -136,7 +135,6 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
 
                             if (node_direction) {
                                 grandparent = rb_right_left_rotation(grandparent);
-                                recover_direction = 1;
                             } else {
                                 grandparent = rb_left_rotation(grandparent);
                             }
@@ -144,7 +142,7 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
                         }
 
                         if (grandparent->parent != NULL) {
-                            if (recover_direction) {
+                            if (grandparent->parent->left == save) {
                                 grandparent->parent->left = grandparent;
                             } else {
                                 grandparent->parent->right = grandparent;
