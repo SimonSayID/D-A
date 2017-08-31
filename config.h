@@ -8,6 +8,8 @@
 typedef struct avl_node_s avl_node_t;
 typedef struct stack_avl_s stack_avl_t;
 
+typedef struct rb_node_s rb_node_t;
+
 int max(int a, int b);
 
 #endif //ALG_CONFIG_H
