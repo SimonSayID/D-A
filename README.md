@@ -21,6 +21,5 @@ avl_tree (non-recursive)
 
 -search (return NULL if the node does not exist)
 
--test (insert and delete 100000 nodes, decrease/increase both) 
+-test (detail see avl_tree_test.c, memory leak see test_result_pic)
 
--memory test detail see the test_result_picture
