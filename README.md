@@ -3,23 +3,28 @@ Data structure &amp; Algorithm
 
 stack (avl_tree version)
 
--init
+- init
 
--push
+- push
 
--top
+- top
 
--pop
+- pop
 
-avl_tree (non-recursive)
+avl tree (non-recursive)
 
--init
+- init
 
--insert (duplicate node won't insert)
+- insert (duplicate node won't insert)
 
--delete (remain unchanged if the node want to delete does not exist)
+- delete (remain unchanged if the node want to delete does not exist)
 
--search (return NULL if the node does not exist)
+- search (return NULL if the node does not exist)
 
--test (detail see avl_tree_test.c, memory leak see test_result_pic)
+- test (detail see avl_tree_test.c, memory leak see test_result_pic)
 
+red black tree (non-recursive)
+
+- inti
+
+- insert (duplicate node won't insert)
