@@ -25,6 +25,6 @@ avl tree (non-recursive)
 
 red black tree (non-recursive)
 
-- inti
+- init
 
 - insert (duplicate node won't insert)
