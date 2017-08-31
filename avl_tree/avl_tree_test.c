@@ -110,4 +110,11 @@ void avl_tree_test() {
     assert(root->left->right->data == 30);
     assert(root->left->left->data == 10);
 
+    // delete root that can trigger find left subtree maximum (trigger maximum parent right_left rotation)
+    root = avl_insert(root, 15);
+    root = avl_delete(root, 35);
+    assert(root->data == 30);
+    assert(root->left->data == 15);
+    assert(root->left->left->data == 10);
+    assert(root->left->right->data == 20);
 }
