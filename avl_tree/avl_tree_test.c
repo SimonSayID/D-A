@@ -117,4 +117,13 @@ void avl_tree_test() {
     assert(root->left->data == 15);
     assert(root->left->left->data == 10);
     assert(root->left->right->data == 20);
+
+    //free the memory
+    root = avl_delete(root, 30);
+    root = avl_delete(root, 15);
+    root = avl_delete(root, 10);
+    root = avl_delete(root, 20);
+    root = avl_delete(root, 50);
+    root = avl_delete(root, 55);
+    assert(root == NULL);
 }
