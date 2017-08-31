@@ -195,7 +195,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     }
                 }
                      /* left child */
-                 else if (temp->left != NULL && temp->right == NULL) {
+                 else if (temp->left != NULL) {
                     if (parent != NULL) {
                         if (parent->right == temp) {
                             parent->right = temp->left;
@@ -207,7 +207,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     }
                 }
                     /* right child */
-                 else if (temp->left == NULL && temp->right != NULL) {
+                 else {
                     if (parent != NULL) {
                         if (parent->right == temp) {
                             parent->right = temp->right;
