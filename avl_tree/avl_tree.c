@@ -139,6 +139,9 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             /* root */
             if (temp->left != NULL && temp->right != NULL){
 
+                /*
+                 * delete the root that does not have parent, need to push the new root for re-balance
+                 * */
                 int empty = 0;
                 if (stack_avl->next == NULL) {
                     empty = 1;
@@ -159,7 +162,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                 if (temp != s->left) {
                     avl_node_t *tp = stacks_avl_top(stack_avl);
                     tp->right = temp->left; //left subtree maximum node's parent adjustment
-                    if (empty) {
+                    if (empty) { // check the root whether have parent
                         stacks_avl_pop(stack_avl);
                         stacks_avl_push(stack_avl, s);
                         stacks_avl_push(stack_avl, tp);
