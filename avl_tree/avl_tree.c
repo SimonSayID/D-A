@@ -165,11 +165,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                         stacks_avl_push(stack_avl, tp);
                     }
                 } else {
-                    if (temp->left != NULL) {
-                        s->left = temp->left;
-                    } else {
-                        s->left = NULL;
-                    }
+                    s->left = temp->left;
                     stacks_avl_push(stack_avl, s);
                 }
 
@@ -264,18 +260,12 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
 }
 
 avl_node_t* avl_search(avl_node_t *node, int data){
-    if (node->data == data) {
-        return node;
-    }
     while (node != NULL && node->data != data){
         if (node->data > data) {
             node = node->left;
-        } else if (node->data < data) {
+        } else {
             node = node->right;
         }
     }
-    if (node != NULL) {
-        return node;
-    }
-    return NULL;
+    return node;
 }
