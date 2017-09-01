@@ -181,10 +181,10 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     /* no child */
                  if (temp->left == NULL && temp->right == NULL) {
                     if (parent != NULL) {
-                        if (parent->right == temp) {
-                            parent->right = NULL;
-                        } else {
+                        if (parent->left == temp) {
                             parent->left = NULL;
+                        } else {
+                            parent->right = NULL;
                         }
                     } else {
                         free(temp);
@@ -196,10 +196,10 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                      /* left child */
                  else if (temp->left != NULL) {
                     if (parent != NULL) {
-                        if (parent->right == temp) {
-                            parent->right = temp->left;
-                        } else {
+                        if (parent->left == temp) {
                             parent->left = temp->left;
+                        } else {
+                            parent->right = temp->left;
                         }
                     } else {
                         node = temp->left;
@@ -208,10 +208,10 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     /* right child */
                  else {
                     if (parent != NULL) {
-                        if (parent->right == temp) {
-                            parent->right = temp->right;
-                        } else {
+                        if (parent->left == temp) {
                             parent->left = temp->right;
+                        } else {
+                            parent->right = temp->right;
                         }
                     } else {
                         node = temp->right;
