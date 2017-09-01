@@ -69,7 +69,7 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
                     break;
                 }
                 node = node->left;
-            } else if (node->data < data) {
+            } else {
                 if (node->right == NULL) {
                     node->right = new;
                     break;
@@ -131,7 +131,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             stacks_avl_push(stack_avl, temp);
             if (temp->data > data) {
                 temp = temp->left;
-            } else if (temp->data < data) {
+            } else {
                 temp = temp->right;
             }
         }
