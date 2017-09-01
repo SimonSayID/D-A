@@ -95,7 +95,7 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
         }
 
         while (new != NULL) {
-            if (new->parent != NULL) {
+            if (rb_is_red(new) && new->parent != NULL) {
                 if (rb_is_red(new->parent)) {
                     rb_node_t *grandparent = new->parent->parent;
                     rb_node_t *save = grandparent;
@@ -113,34 +113,31 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
                             if (grandparent->right != NULL && rb_is_red(grandparent->right)) {
                                 rb_color_black(new->parent);
                                 rb_color_black(grandparent->right);
-                                rb_is_red(grandparent);
-                                goto next;
-                            }
-
-                            if (node_direction) {
-                                grandparent = rb_right_rotation(grandparent);
+                                rb_color_red(grandparent);
                             } else {
-                                grandparent = rb_left_right_rotation(grandparent);
+                                if (node_direction) {
+                                    grandparent = rb_right_rotation(grandparent);
+                                } else {
+                                    grandparent = rb_left_right_rotation(grandparent);
+                                }
                             }
                             new = grandparent->left;
                         }
                             //grandparent's parent is right child
                         else {
                             if (grandparent->left != NULL && rb_is_red(grandparent->left)) {
-                                rb_color_black(new->parent);
+                                rb_color_black(grandparent->right);
                                 rb_color_black(grandparent->left);
-                                rb_is_red(grandparent);
-                                goto next;
-                            }
-
-                            if (node_direction) {
-                                grandparent = rb_right_left_rotation(grandparent);
+                                rb_color_red(grandparent);
                             } else {
-                                grandparent = rb_left_rotation(grandparent);
+                                if (node_direction) {
+                                    grandparent = rb_right_left_rotation(grandparent);
+                                } else {
+                                    grandparent = rb_left_rotation(grandparent);
+                                }
                             }
                             new = grandparent->right;
                         }
-
                         if (grandparent->parent != NULL) {
                             if (grandparent->parent->left == save) {
                                 grandparent->parent->left = grandparent;
@@ -153,7 +150,6 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
             } else {
                 node = new;
             }
-            next:
             new = new->parent;
         }
 
