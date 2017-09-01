@@ -111,10 +111,9 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
                     rbp->left = rb;
                 }
                 rbp->height = max(avl_height(rbp->left), avl_height(rbp->right)) + 1;
-                continue;
+            } else {
+                node = rb;
             }
-
-            node = rb;
         }
         end:
         free(stacks);
