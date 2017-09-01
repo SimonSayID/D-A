@@ -4,15 +4,6 @@
 
 #include "../main.h"
 
-static rb_node_t *color_filp(rb_node_t *node) {
-    if (node->color) {
-        node->color = 0;
-    } else {
-        node->color = 1;
-    }
-    return node;
-}
-
 static rb_node_t *rb_left_rotation(rb_node_t *node) {
 
     node->color = 1;
@@ -95,8 +86,8 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
         }
 
         while (new != NULL) {
-            if (rb_is_red(new) && new->parent != NULL) {
-                if (rb_is_red(new->parent)) {
+            if (new->parent != NULL) {
+                if (rb_is_red(new) && rb_is_red(new->parent)) {
                     rb_node_t *grandparent = new->parent->parent;
                     rb_node_t *save = grandparent;
                     if (grandparent != NULL) {
