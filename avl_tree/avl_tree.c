@@ -192,28 +192,16 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                         return node;
                     }
                 }
-                     /* left child */
-                 else if (temp->left != NULL) {
-                    if (parent != NULL) {
-                        if (parent->left == temp) {
-                            parent->left = temp->left;
-                        } else {
-                            parent->right = temp->left;
-                        }
-                    } else {
-                        node = temp->left;
-                    }
-                }
-                    /* right child */
+                     /* one child */
                  else {
                     if (parent != NULL) {
                         if (parent->left == temp) {
-                            parent->left = temp->right;
+                            parent->left = (temp->right != NULL ? temp->right : temp->left);
                         } else {
-                            parent->right = temp->right;
+                            parent->right = (temp->right != NULL ? temp->right : temp->left);
                         }
                     } else {
-                        node = temp->right;
+                        node = (temp->right != NULL ? temp->right : temp->left);
                     }
                 }
             }
