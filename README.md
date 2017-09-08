@@ -36,6 +36,19 @@ red black tree （红黑树） (non-recursive 非递归)
 - test 测试 (detail see rb_tree_test.c)
 
 
-
 AVL树的数据结构没有使用父节点，红黑树则使用了父节点，但是没有用哨兵（sentinel）
 另外测试代码基本涵盖所有情况
+
+sorting (排序)
+
+- bubble sort 冒泡排序
+
+- select sort 挑选排序
+
+- insert sort 插入排序
+
+- quick sort 快速排序
+
+- merge sort 归并排序
+
+- test 测试 (detail see sort_test.c)
