@@ -14,5 +14,6 @@
 #include <stacks.h>
 #include <avl_tree.h>
 #include <rb_tree.h>
+#include <sorting.h>
 
 #endif //ALG_MAIN_H

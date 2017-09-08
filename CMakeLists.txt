@@ -7,6 +7,7 @@ include_directories(
         "${PROJECT_SOURCE_DIR}/avl_tree/"
         "${PROJECT_SOURCE_DIR}/stack/"
         "${PROJECT_SOURCE_DIR}/rb_tree/"
+        "${PROJECT_SOURCE_DIR}/sort/"
 )
 
 file(
@@ -17,6 +18,8 @@ file(
         "stack/*.c"
         "rb_tree/*.h"
         "rb_tree/*.c"
+        "sort/*.h"
+        "sort/*.c"
         "*.h"
         "*.c"
 )
