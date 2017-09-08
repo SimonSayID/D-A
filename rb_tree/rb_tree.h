@@ -30,6 +30,8 @@ rb_node_t *rb_tree_init(int data);
 
 rb_node_t *rb_tree_insert(rb_node_t *node, int data);
 
+rb_node_t *rb_tree_delete(rb_node_t *node, int data);
+
 void rb_tree_test();
 
 #endif //D_A_RB_TREE_H
