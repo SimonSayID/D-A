@@ -1,30 +1,41 @@
 # D-A
-Data structure &amp; Algorithm
+Data structure &amp; Algorithm （数据结构与算法）
 
-stack (avl_tree version)
+stack（栈） (avl_tree version)
 
-- init
+- init 初始化
 
-- push
+- push 进栈
 
-- top
+- top 顶部
 
-- pop
+- pop 出栈
 
-avl tree (non-recursive)
+avl tree （AVL 树） (non-recursive 非递归)
 
-- init
+- init 初始化
 
-- insert (duplicate node won't insert)
+- insert 插入 (duplicate node won't insert)
 
-- delete (remain unchanged if the node want to delete does not exist)
+- delete 删除 (remain unchanged if the node want to delete does not exist)
 
-- search (return NULL if the node does not exist)
+- search 搜索 (return NULL if the node does not exist)
 
-- test (detail see avl_tree_test.c, memory leak see test_result_pic)
+- test 测试 (detail see avl_tree_test.c)
 
-red black tree (non-recursive)
+red black tree （红黑树） (non-recursive 非递归)
 
-- init
+- init 初始化
 
-- insert (duplicate node won't insert)
+- insert 插入 (duplicate node won't insert)
+
+- delete 删除 (remain unchanged if the node want to delete does not exist)
+
+- search 搜索 (return NULL if the node does not exist)
+
+- test 测试 (detail see rb_tree_test.c)
+
+
+
+AVL树的数据结构没有使用父节点，红黑树则使用了父节点，但是没有用哨兵（sentinel）
+另外测试代码基本涵盖所有情况
