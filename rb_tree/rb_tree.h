@@ -5,7 +5,6 @@
 #ifndef D_A_RB_TREE_H
 #define D_A_RB_TREE_H
 
-#include <sys/param.h>
 #include "../main.h"
 
 /*
