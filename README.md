@@ -23,6 +23,8 @@ queue（队列）
 
 - destroy_queue 销毁队列
 
+- test (detail see queue_test.c)
+
 avl tree （AVL 树） (non-recursive 非递归)
 
 - init 初始化
