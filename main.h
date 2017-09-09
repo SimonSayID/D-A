@@ -15,5 +15,6 @@
 #include <avl_tree.h>
 #include <rb_tree.h>
 #include <sorting.h>
+#include <queue.h>
 
 #endif //ALG_MAIN_H

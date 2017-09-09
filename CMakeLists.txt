@@ -8,6 +8,7 @@ include_directories(
         "${PROJECT_SOURCE_DIR}/stack/"
         "${PROJECT_SOURCE_DIR}/rb_tree/"
         "${PROJECT_SOURCE_DIR}/sort/"
+        "${PROJECT_SOURCE_DIR}/queue/"
 )
 
 file(
@@ -20,6 +21,8 @@ file(
         "rb_tree/*.c"
         "sort/*.h"
         "sort/*.c"
+        "queue/*.h"
+        "queue/*.c"
         "*.h"
         "*.c"
 )

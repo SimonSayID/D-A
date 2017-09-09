@@ -11,6 +11,18 @@ stack（栈） (avl_tree version)
 
 - pop 出栈
 
+queue（队列）
+
+- init 初始化
+
+- enqueue 进队
+
+- dequeue 出队
+
+- is_empty 是否为空
+
+- destroy_queue 销毁队列
+
 avl tree （AVL 树） (non-recursive 非递归)
 
 - init 初始化
