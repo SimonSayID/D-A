@@ -26,7 +26,7 @@ hash_table_t *hash_init(size_t table_size) {
     hash_table_t *ht = malloc(sizeof(hash_table_t));
     ht->table_size = table_size;
     ht->counter = 0;
-    ht->lists = (hash_list_node_t **) malloc(ht->table_size * sizeof(hash_list_node_t *));
+    ht->lists = (hash_lists) malloc(ht->table_size * sizeof(hash_single_list));
 
     return ht;
 }

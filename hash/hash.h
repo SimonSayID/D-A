@@ -11,6 +11,10 @@
 
 typedef struct hash_list_node_s hash_list_node_t;
 
+typedef hash_list_node_t *hash_single_list;
+
+typedef hash_single_list *hash_lists;
+
 struct hash_list_node_s {
     const char *data;
     hash_list_node_t *next;
@@ -19,7 +23,7 @@ struct hash_list_node_s {
 struct hash_table_s {
     size_t table_size;
     size_t counter;
-    hash_list_node_t **lists;
+    hash_lists lists;
 };
 
 uintptr_t hash_key(const char *str);
