@@ -1,6 +1,9 @@
 # D-A
 Data structure &amp; Algorithm （数据结构与算法）
 
+>all the implement in here just for practice\
+>这里所有的实现只是用于练习
+
 ## list（链表） 
 
 - init 初始化
@@ -95,7 +98,3 @@ Data structure &amp; Algorithm （数据结构与算法）
 - merge sort 归并排序
 
 - test 测试 (detail see sort_test.c)
-
-
->all the implement in here just for practice\
->这里所有的实现只是用于练习
