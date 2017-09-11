@@ -1,7 +1,7 @@
 # D-A
 Data structure &amp; Algorithm （数据结构与算法）
 
-##list（链表） 
+## list（链表） 
 
 - init 初始化
 
@@ -13,7 +13,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - test 测试 (detail see list_test.c)
 
-##stack（栈） (avl_tree version)
+## stack（栈） (avl_tree version)
 
 - init 初始化
 
@@ -23,7 +23,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - pop 出栈
 
-##queue（队列）
+## queue（队列）
 
 - init 初始化
 
@@ -37,7 +37,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - test (detail see queue_test.c)
 
-##avl tree （AVL 树） (non-recursive 非递归)
+## avl tree （AVL 树） (non-recursive 非递归)
 
 - init 初始化
 
@@ -51,7 +51,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 >AVL树的数据结构没有使用父节点，另外测试代码基本涵盖所有情况
 
-##red black tree （红黑树） (non-recursive 非递归)
+## red black tree （红黑树） (non-recursive 非递归)
 
 - init 初始化
 
@@ -66,7 +66,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 >红黑树使用了父节点，但是没有用哨兵节点（sentinel），另外测试代码基本涵盖所有情况
 
-##hash（散列表）
+## hash（散列表）
 
 - init 初始化
 
@@ -82,7 +82,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 >碰撞使用分链解决，散列表的大小在初始化时确定，目前没有实现resize
 
-##sorting (排序)
+## sorting (排序)
 
 - bubble sort 冒泡排序
 
