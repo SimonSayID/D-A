@@ -7,14 +7,9 @@
 
 #include "../main.h"
 
-struct queue_n_s {
-    int data;
-    queue_n_t *next;
-};
-
 struct queue_s {
-    queue_n_t *head;
-    queue_n_t *tail;
+    list_t *head;
+    list_t *tail;
 };
 
 queue_t *queue_init();

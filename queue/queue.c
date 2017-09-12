@@ -12,7 +12,7 @@ queue_t *queue_init() {
 
 void enqueue(queue_t *queue, int data) {
     if (queue != NULL) {
-        queue_n_t *new = malloc(sizeof(queue_n_t));
+        list_t *new = (list_t *) malloc(sizeof(list_t));
         new->data = data;
         new->next = NULL;
         if (queue->head == NULL) {
@@ -29,7 +29,7 @@ void enqueue(queue_t *queue, int data) {
 
 void dequeue(queue_t *queue) {
     if (queue->head != NULL) {
-        queue_n_t *temp = queue->head;
+        list_t *temp = queue->head;
         queue->head = queue->head->next;
         if (queue->head == NULL) {
             queue->tail = NULL;
