@@ -13,7 +13,7 @@ void insert_sort(int *A, int N);
 
 void quick_sort(int *A, int left, int right);
 
-void merge_sort(int *A, int left, int right);
+void merge_sort(int *A, int n);
 
 void sort_test();
 

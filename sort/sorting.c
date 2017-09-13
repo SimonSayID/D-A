@@ -77,48 +77,25 @@ void quick_sort(int *A, int left, int right) {
 
 }
 
-static void merge(int *A, int *temp, int l_pos, int r_pos, int right_end) {
-    int left_end = r_pos - 1;
-    int tmp = l_pos;
-    int nelem = right_end - l_pos + 1;
-
-    while (l_pos <= left_end && r_pos <= right_end) {
-        if (A[l_pos] <= A[r_pos]) {
-            temp[tmp++] = A[l_pos++];
-        } else {
-            temp[tmp++] = A[r_pos++];
-        }
+static void merge(int *A, int left, int right) {
+    int i, j, k;
+    int *x = malloc(left * sizeof (int));
+    for (i = 0, j = right, k = 0; k < left; k++) {
+        x[k] = j == left ? A[i++] :
+               i == right ? A[j++] :
+               A[j] < A[i] ? A[j++] : A[i++];
     }
-
-    while (l_pos <= left_end) {
-        temp[tmp++] = A[l_pos++];
+    for (i = 0; i < left; i++) {
+        A[i] = x[i];
     }
-    while (r_pos <= right_end) {
-        temp[tmp++] = A[r_pos++];
-    }
-
-    for (int i = 0; i < nelem; ++i, --right_end) {
-        A[right_end] = temp[right_end];
-    }
+    free(x);
 }
 
-static void msort(int *A, int *temp, int left, int right) {
-    int center;
-    if (left < right) {
-        center = (left + right) / 2;
-        msort(A, temp, left, center);
-        msort(A, temp, center + 1, right);
-        merge(A, temp, left, center + 1, right);
-    }
-}
-
-void merge_sort(int *A, int left, int right) {
-    int size = right - left;
-    int *temp = (int *) malloc(size * sizeof(int));
-    if (temp != NULL) {
-        msort(A, temp, left, right);
-        free(temp);
-    } else {
-        perror("merge_sort");
-    }
+void merge_sort(int *A, int n) {
+    if (n < 2)
+        return;
+    int center = n / 2;
+    merge_sort(A, center);
+    merge_sort(A + center, n - center);
+    merge(A, n, center);
 }
