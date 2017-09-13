@@ -5,7 +5,7 @@
 #include "../main.h"
 
 list_t *list_init(int data) {
-    list_t *list = (list_t *) malloc(sizeof(list_t));
+    list_t *list = (list_t *) calloc(1, sizeof(list_t));
     list->data = data;
     list->next = NULL;
     return list;
@@ -13,7 +13,7 @@ list_t *list_init(int data) {
 
 void list_insert(list_t *list, int data) {
     if (list != NULL) {
-        list_t *node = (list_t *) malloc(sizeof(list_t));
+        list_t *node = (list_t *) calloc(1, sizeof(list_t));
         node->data = data;
         node->next = NULL;
         while (list->next != NULL) {

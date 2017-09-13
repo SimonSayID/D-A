@@ -4,12 +4,16 @@
 
 #include "config.h"
 
+// conflict with windows header
+#ifndef max
+#define
 int max(int a, int b){
     if (a > b) {
         return a;
     }
     return b;
 }
+#endif
 
 static int is_prime(size_t num) {
     for (int i = 3;; i += 2) {

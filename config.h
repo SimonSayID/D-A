@@ -17,7 +17,9 @@ typedef struct hash_table_s hash_table_t;
 typedef struct bm_heap_node_s bm_heap_node_t;
 typedef struct bm_heap_collect_s gm_heap_collect_t;
 
-int max(int a, int b);
+#ifndef max
+#define int max(int a, int b);
+#endif
 
 size_t next_prime(size_t num);
 
