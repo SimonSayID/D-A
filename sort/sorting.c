@@ -114,7 +114,7 @@ static void msort(int *A, int *temp, int left, int right) {
 
 void merge_sort(int *A, int left, int right) {
     int size = right - left;
-    int *temp = malloc(size * sizeof(int));
+    int *temp = (int *) malloc(size * sizeof(int));
     if (temp != NULL) {
         msort(A, temp, left, right);
         free(temp);

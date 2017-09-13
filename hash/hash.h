@@ -9,8 +9,6 @@
 
 #define HASH_TABLE_SIZE 2
 
-typedef struct hash_list_node_s hash_list_node_t;
-
 typedef hash_list_node_t *hash_single_list;
 
 typedef hash_single_list *hash_lists;

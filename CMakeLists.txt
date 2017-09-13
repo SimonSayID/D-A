@@ -11,6 +11,7 @@ include_directories(
         "${PROJECT_SOURCE_DIR}/list/"
         "${PROJECT_SOURCE_DIR}/queue/"
         "${PROJECT_SOURCE_DIR}/hash/"
+        "${PROJECT_SOURCE_DIR}/heap/"
 )
 
 file(
@@ -29,8 +30,10 @@ file(
         "queue/*.c"
         "hash/*.h"
         "hash/*.c"
+        "heap/*.h"
+        "heap/*.c"
         "*.h"
         "*.c"
 )
 
-add_executable(D-A ${SOURCE} rb_tree/rb_tree.c rb_tree/rb_tree.h)
+add_executable(D-A ${SOURCE})
