@@ -10,19 +10,10 @@
 struct avl_node_s {
     avl_node_t    *left;
     avl_node_t    *right;
+    avl_node_t    *parent;
     int           data;
     int           height;
 };
-
-static int avl_height(avl_node_t *node);
-
-static avl_node_t* avl_left_rotation(avl_node_t *node);
-
-static avl_node_t* avl_right_rotation(avl_node_t *node);
-
-static avl_node_t* avl_left_right_rotation(avl_node_t *node);
-
-static avl_node_t* avl_right_left_rotation(avl_node_t *node);
 
 avl_node_t* avl_tree_init(int data);
 

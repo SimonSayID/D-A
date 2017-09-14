@@ -12,9 +12,15 @@ static int avl_height(avl_node_t *node){
 }
 
 static avl_node_t* avl_left_rotation(avl_node_t *node){
-
+    node->right->parent = node->parent;
     avl_node_t *temp = node->right;
+
+    if (temp->left != NULL) {
+        temp->left->parent = node;
+    }
     node->right = temp->left;
+
+    node->parent = temp;
     temp->left = node;
 
     node->height = max(avl_height(node->left), avl_height(node->right)) + 1;
@@ -24,9 +30,15 @@ static avl_node_t* avl_left_rotation(avl_node_t *node){
 }
 
 static avl_node_t* avl_right_rotation(avl_node_t *node){
-
+    node->left->parent = node->parent;
     avl_node_t *temp = node->left;
+
+    if (temp->right != NULL) {
+        temp->right->parent = node;
+    }
     node->left = temp->right;
+
+    node->parent = temp;
     temp->right = node;
 
     node->height = max(avl_height(node->left), avl_height(node->right)) + 1;
@@ -48,7 +60,8 @@ static avl_node_t* avl_right_left_rotation(avl_node_t *node){
 avl_node_t* avl_tree_init(int data) {
     avl_node_t* root = (avl_node_t *)malloc(sizeof(avl_node_t));
     root->data = data;
-    root->left = root->right = NULL;
+    root->parent = root->left = root->right = NULL;
+    root->height = 0;
     return root;
 }
 
@@ -57,12 +70,11 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
 
         avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
         new->data = data;
-        new->left = new->right = NULL;
+        new->parent = new->left = new->right = NULL;
         new->height = 0;
 
-        stack_avl_t *stacks = stacks_avl_init();
         do {
-            stacks_avl_push(stacks, node);
+            new->parent = node;
             if (node->data > data) {
                 if (node->left == NULL) {
                     node->left = new;
@@ -82,41 +94,42 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             goto end;
         }
 
-        while (stacks->next != NULL) {
+        node = new;
 
-            avl_node_t *rb = stacks_avl_top(stacks);
-            rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
-            avl_node_t *save = rb;
+        while (node != NULL) {
 
-            if (avl_height(rb->left) - avl_height(rb->right) == 2){
-                if (avl_height(rb->left->left) - avl_height(rb->left->right) == 1) {
-                    rb = avl_right_rotation(rb);
+            avl_node_t *save = node;
+            node->height = max(avl_height(node->left), avl_height(node->right)) + 1;
+
+            if (avl_height(node->left) - avl_height(node->right) == 2) {
+                if (avl_height(node->left->left) - avl_height(node->left->right) == 1) {
+                    node = avl_right_rotation(node);
                 } else {
-                    rb = avl_left_right_rotation(rb);
+                    node = avl_left_right_rotation(node);
                 }
-            } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
-                if (avl_height(rb->right->right) - avl_height(rb->right->left) == 1) {
-                    rb = avl_left_rotation(rb);
+            } else if (avl_height(node->right) - avl_height(node->left) == 2) {
+                if (avl_height(node->right->right) - avl_height(node->right->left) == 1) {
+                    node = avl_left_rotation(node);
                 } else {
-                    rb = avl_right_left_rotation(rb);
+                    node = avl_right_left_rotation(node);
                 }
             }
 
-            stacks_avl_pop(stacks);
-            avl_node_t *rbp = stacks_avl_top(stacks);
-            if (rbp != NULL) {
-                if (rbp->right == save) {
-                    rbp->right = rb;
+            avl_node_t *p = node->parent;
+            if (p != NULL) {
+                if (p->left == save) {
+                    p->left = node;
                 } else {
-                    rbp->left = rb;
+                    p->right = node;
                 }
-                rbp->height = max(avl_height(rbp->left), avl_height(rbp->right)) + 1;
             } else {
-                node = rb;
+                goto end;
             }
+
+            node = node->parent;
         }
+
         end:
-        free(stacks);
         return node;
     }
     return NULL;
@@ -124,128 +137,106 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
 
 avl_node_t* avl_delete(avl_node_t *node, int data){
     if (node != NULL) {
-        avl_node_t *temp = node;
-        stack_avl_t *stack_avl = stacks_avl_init();
-        while (temp != NULL && temp->data != data) {
-            stacks_avl_push(stack_avl, temp);
-            if (temp->data > data) {
-                temp = temp->left;
+        avl_node_t *del = node;
+        avl_node_t *reb = NULL;
+
+        while (del != NULL && del->data != data) {
+            if (del->data > data) {
+                del = del->left;
             } else {
-                temp = temp->right;
+                del = del->right;
             }
         }
 
-        if (temp != NULL) {
-            /* root */
-            if (temp->left != NULL && temp->right != NULL){
+        if (del != NULL) {
 
-                /*
-                 * delete the root that does not have parent, need to push the new root for re-balance
-                 * */
-                int empty = 0;
-                if (stack_avl->next == NULL) {
-                    empty = 1;
+            if (del->left != NULL && del->right != NULL) {
+                avl_node_t *predecessor = del->left;
+                while (predecessor->right != NULL) {
+                    predecessor = predecessor->right;
                 }
 
-                avl_node_t *s = temp;
-                temp = temp->left; // temp's left subtree root
-                stacks_avl_push(stack_avl, temp);
+                del->data = predecessor->data;
 
-                while (temp->right != NULL) {
-                    temp = temp->right;
-                    stacks_avl_push(stack_avl, temp);
+                if (predecessor->parent->right == predecessor) {
+                    predecessor->parent->right = predecessor->left;
+                } else {
+                    predecessor->parent->left = predecessor->left;
                 }
 
-                s->data = temp->data;
-                stacks_avl_pop(stack_avl);
+                reb = predecessor->parent;
+                del = predecessor;
 
-                if (temp != s->left) {
-                    avl_node_t *tp = stacks_avl_top(stack_avl);
-                    tp->right = temp->left; //left subtree maximum node's parent adjustment
-                    if (empty) { // check the root whether have parent
-                        stacks_avl_pop(stack_avl);
-                        stacks_avl_push(stack_avl, s);
-                        stacks_avl_push(stack_avl, tp);
+            } else if (del->left == NULL && del->right == NULL) {
+
+                if (del->parent != NULL) {
+                    if (del->parent->left == del) {
+                        del->parent->left = NULL;
+                    } else {
+                        del->parent->right = NULL;
                     }
                 } else {
-                    s->left = temp->left;
-                    stacks_avl_push(stack_avl, s);
+                    node = NULL;
                 }
+                reb = del->parent;
 
-            }
-            else {
+            } else {
 
-                avl_node_t *parent = stacks_avl_top(stack_avl);
-
-                    /* no child */
-                 if (temp->left == NULL && temp->right == NULL) {
-                    if (parent != NULL) {
-                        if (parent->left == temp) {
-                            parent->left = NULL;
-                        } else {
-                            parent->right = NULL;
-                        }
+                if (del->parent != NULL) {
+                    if (del->parent->left == del) {
+                        del->parent->left = del->left != NULL ? del->left : del->right;
+                        reb = del->parent->left;
                     } else {
-                        free(temp);
-                        free(stack_avl);
-                        node = NULL;
-                        return node;
+                        del->parent->right = del->left != NULL ? del->left : del->right;
+                        reb = del->parent->right;
                     }
-                }
-                     /* one child */
-                 else {
-                    if (parent != NULL) {
-                        if (parent->left == temp) {
-                            parent->left = (temp->right != NULL ? temp->right : temp->left);
-                        } else {
-                            parent->right = (temp->right != NULL ? temp->right : temp->left);
-                        }
-                    } else {
-                        node = (temp->right != NULL ? temp->right : temp->left);
-                    }
-                }
-            }
-
-            free(temp);
-
-            while (stack_avl->next != NULL) {
-
-                avl_node_t *rb = stacks_avl_top(stack_avl);
-                rb->height = max(avl_height(rb->left), avl_height(rb->right)) + 1;
-                avl_node_t *save = rb;
-
-                if (avl_height(rb->left) - avl_height(rb->right) == 2) {
-                    if (avl_height(rb->left->right) - avl_height(rb->left->left) == 1) {
-                        rb = avl_left_right_rotation(rb);
-                    } else {
-                        rb = avl_right_rotation(rb);
-                    }
-                } else if (avl_height(rb->right) - avl_height(rb->left) == 2) {
-                    if (avl_height(rb->right->left) - avl_height(rb->right->right) == 1) {
-                        rb = avl_right_left_rotation(rb);
-                    } else {
-                        rb = avl_left_rotation(rb);
-                    }
-                }
-
-                stacks_avl_pop(stack_avl);
-
-                if (stack_avl->next != NULL) {
-                    avl_node_t *rbp = stacks_avl_top(stack_avl);
-                    if (rbp->right == save) {
-                        rbp->right = rb;
-                    } else {
-                        rbp->left = rb;
-                    }
-                    rbp->height = max(avl_height(rbp->left), avl_height(rbp->right)) + 1;
                 } else {
-                    node = rb;
+                    node = del->left != NULL ? del->left : del->right;
+                    node->parent = NULL;
                 }
+
+                if (reb != NULL) {
+                    reb->parent = del->parent;
+                }
+
             }
 
-            free(stack_avl);
+            free(del);
+
+            while (reb != NULL) {
+
+                avl_node_t *save = reb;
+                reb->height = max(avl_height(reb->left), avl_height(reb->right)) + 1;
+                if (avl_height(reb->left) - avl_height(reb->right) == 2) {
+                    if (avl_height(reb->left->right) - avl_height(reb->left->left) == 1) {
+                        reb = avl_left_right_rotation(reb);
+                    } else {
+                        reb = avl_right_rotation(reb);
+                    }
+                } else if (avl_height(reb->right) - avl_height(reb->left) == 2) {
+                    if (avl_height(reb->right->left) - avl_height(reb->right->right) == 1) {
+                        reb = avl_right_left_rotation(reb);
+                    } else {
+                        reb = avl_left_rotation(reb);
+                    }
+                }
+
+                avl_node_t *p = reb->parent;
+                if (p != NULL) {
+                    if (p->left == save) {
+                        p->left = reb;
+                    } else {
+                        p->right = reb;
+                    }
+                } else {
+                    node = reb;
+                    goto end;
+                }
+                reb = reb->parent;
+            }
+
         }
-
+    end:
         return node;
     }
 }
