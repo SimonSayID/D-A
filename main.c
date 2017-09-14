@@ -1,12 +1,13 @@
 #include "main.h"
 
 int main() {
-    avl_tree_test();
-    rb_tree_test();
-    sort_test();
-    queue_test();
-    list_test();
-    hash_test();
+//    list_test();
+    stack_test();
+//    queue_test();
+//    sort_test();
+//    hash_test();
+//    avl_tree_test();
+//    rb_tree_test();
 //    size_t num = 998;
 //    num = next_prime(num);
 //    printf("%ld\n", num);

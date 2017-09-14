@@ -6,7 +6,6 @@
 
 // conflict with windows header
 #ifndef max
-#define
 int max(int a, int b){
     if (a > b) {
         return a;

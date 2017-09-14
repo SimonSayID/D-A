@@ -16,7 +16,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - test 测试 (detail see list_test.c)
 
-## stack（栈） (avl_tree version)
+## stack（栈）
 
 - init 初始化
 
@@ -25,6 +25,8 @@ Data structure &amp; Algorithm （数据结构与算法）
 - top 顶部
 
 - pop 出栈
+
+- clean 清除
 
 ## queue（队列）
 
@@ -51,8 +53,6 @@ Data structure &amp; Algorithm （数据结构与算法）
 - search 搜索 (return NULL if the node does not exist)
 
 - test 测试 (detail see avl_tree_test.c)
-
->AVL树的数据结构没有使用父节点，另外测试代码基本涵盖所有情况
 
 ## red black tree （红黑树） (non-recursive 非递归)
 
