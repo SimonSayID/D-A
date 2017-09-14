@@ -12,15 +12,13 @@ struct stack_s {
     stack_t         *next;
 };
 
-stack_t* stack_init();
+stack_t* stack_init(int data);
 
-void stacks_push(stack_t *stack, int data);
+stack_t* stacks_push(stack_t *stack, int data);
+
+stack_t* stack_pop(stack_t *stack);
 
 void stack_top(stack_t *stacks, int *value);
-
-void stack_pop(stack_t *stack);
-
-void stack_clean(stack_t *stacks);
 
 void stack_test();
 

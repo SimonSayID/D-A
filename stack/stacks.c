@@ -4,42 +4,35 @@
 
 #include "../main.h"
 
-stack_t* stack_init(){
+stack_t* stack_init(int data){
     stack_t *stacks = (stack_t *)malloc(sizeof(stack_t));
-    stacks->data = -1;
+    stacks->data = data;
     stacks->next = NULL;
     return stacks;
 }
 
-void stacks_push(stack_t *stack, int data){
+stack_t* stacks_push(stack_t *stack, int data){
     stack_t *new = (stack_t *)malloc(sizeof(stack_t));
     if (new != NULL) {
         new->data = data;
-        new->next = stack->next;
-        stack->next = new;
+        new->next = stack;
+        stack = new;
+        return stack;
     }
+    return NULL;
 }
 
 void stack_top(stack_t *stacks, int *value){
     if (stacks != NULL) {
-        *value = stacks->next->data;
+        *value = stacks->data;
     }
 }
 
-void stack_pop(stack_t *stack){
-    if (stack->next != NULL) {
-        stack_t *first = stack->next;
-        stack->next = stack->next->next;
+stack_t* stack_pop(stack_t *stack){
+    if (stack != NULL) {
+        stack_t *first = stack;
+        stack = stack->next;
         free(first);
     }
-}
-
-void stack_clean(stack_t *stacks){
-    if (stacks != NULL) {
-        while (stacks->next != NULL) {
-            stack_pop(stacks);
-        }
-    } else {
-        return;
-    }
+    return stack;
 }
