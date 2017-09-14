@@ -7,19 +7,21 @@
 
 #include "../main.h"
 
-struct stack_avl_s {
-    avl_node_t       *node;
-    stack_avl_t      *next;
+struct stack_s {
+    int             data;
+    stack_t         *next;
 };
 
-stack_avl_t* stacks_avl_init();
+stack_t* stack_init();
 
-void stacks_avl_push(stack_avl_t *stack, avl_node_t *node);
+void stacks_push(stack_t *stack, int data);
 
-avl_node_t* stacks_avl_top(stack_avl_t *stacks);
+void stack_top(stack_t *stacks, int *value);
 
-void stacks_avl_pop(stack_avl_t *stack);
+void stack_pop(stack_t *stack);
 
-void stacks_avl_clean(stack_avl_t *stacks);
+void stack_clean(stack_t *stacks);
+
+void stack_test();
 
 #endif //ALG_STACKS_H

@@ -2,44 +2,42 @@
 // Created by simon on 8/27/17.
 //
 
-#include <assert.h>
 #include "../main.h"
 
-stack_avl_t* stacks_avl_init(){
-    stack_avl_t *stacks = (stack_avl_t *)malloc(sizeof(stack_avl_t));
-    stacks->node = NULL;
+stack_t* stack_init(){
+    stack_t *stacks = (stack_t *)malloc(sizeof(stack_t));
+    stacks->data = -1;
     stacks->next = NULL;
     return stacks;
 }
 
-void stacks_avl_push(stack_avl_t *stack, avl_node_t *node){
-    stack_avl_t *new = (stack_avl_t *)malloc(sizeof(stack_avl_t));
+void stacks_push(stack_t *stack, int data){
+    stack_t *new = (stack_t *)malloc(sizeof(stack_t));
     if (new != NULL) {
-        new->node = node;
+        new->data = data;
         new->next = stack->next;
         stack->next = new;
     }
 }
 
-avl_node_t* stacks_avl_top(stack_avl_t *stacks){
-    if (stacks->next != NULL) {
-        return stacks->next->node;
+void stack_top(stack_t *stacks, int *value){
+    if (stacks != NULL) {
+        *value = stacks->next->data;
     }
-    return NULL;
 }
 
-void stacks_avl_pop(stack_avl_t *stack){
+void stack_pop(stack_t *stack){
     if (stack->next != NULL) {
-        stack_avl_t *first = stack->next;
+        stack_t *first = stack->next;
         stack->next = stack->next->next;
         free(first);
     }
 }
 
-void stacks_avl_clean(stack_avl_t *stacks){
+void stack_clean(stack_t *stacks){
     if (stacks != NULL) {
         while (stacks->next != NULL) {
-            stacks_avl_pop(stacks);
+            stack_pop(stacks);
         }
     } else {
         return;
