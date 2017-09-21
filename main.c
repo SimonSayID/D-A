@@ -8,9 +8,9 @@ int main() {
 //    hash_test();
 //    avl_tree_test();
 //    rb_tree_test();
+//    bm_heap_test();
 //    size_t num = 998;
 //    num = next_prime(num);
 //    printf("%ld\n", num);
-    bm_heap_test();
     return 0;
 }

@@ -8,7 +8,7 @@
 uintptr_t hash_key(const char *str) {
     uintptr_t key = 0;
 
-    u_char *data = (u_char *) str;
+    unsigned char *data = (unsigned char *) str;
     size_t size = strlen(str);
 
     for (int i = 0; i < size; ++i) {

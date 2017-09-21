@@ -234,7 +234,7 @@ rb_node_t *rb_tree_delete(rb_node_t *node, int data) {
 
             // create double black node
             rb_node_t *dbn = malloc(sizeof(rb_node_t));
-            dbn->color = '2';
+            dbn->color = 2;
 
             if (temp->parent->left == temp) {
                 temp->parent->left = dbn;
@@ -245,7 +245,7 @@ rb_node_t *rb_tree_delete(rb_node_t *node, int data) {
 
             free(temp);
 
-            while (dbn != NULL && dbn->color == '2') {
+            while (dbn != NULL && dbn->color == 2) {
 
                 // case 1
                 if (dbn == node) {
@@ -277,7 +277,7 @@ rb_node_t *rb_tree_delete(rb_node_t *node, int data) {
                     if (rb_is_red(dbn->parent)) {
                         rb_color_black(dbn->parent);
                     } else {
-                        dbn->parent->color = '2';
+                        dbn->parent->color = 2;
                     }
                     rb_color_red(sibling);
                     if (dbn->parent->left == dbn) {

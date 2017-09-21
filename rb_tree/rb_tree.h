@@ -17,7 +17,7 @@ struct rb_node_s {
     rb_node_t *left;
     rb_node_t *right;
     int data;
-    u_char color;
+    int color;
 };
 
 #define rb_color_red(node)      ((node)->color = 1)
