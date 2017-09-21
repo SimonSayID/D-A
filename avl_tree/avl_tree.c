@@ -102,16 +102,16 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             node->height = max(avl_height(node->left), avl_height(node->right)) + 1;
 
             if (avl_height(node->left) - avl_height(node->right) == 2) {
-                if (avl_height(node->left->left) - avl_height(node->left->right) == 1) {
-                    node = avl_right_rotation(node);
-                } else {
+                if (avl_height(node->left->right) - avl_height(node->left->left) == 1) {
                     node = avl_left_right_rotation(node);
+                } else {
+                    node = avl_right_rotation(node);
                 }
             } else if (avl_height(node->right) - avl_height(node->left) == 2) {
-                if (avl_height(node->right->right) - avl_height(node->right->left) == 1) {
-                    node = avl_left_rotation(node);
-                } else {
+                if (avl_height(node->right->left) - avl_height(node->right->right) == 1) {
                     node = avl_right_left_rotation(node);
+                } else {
+                    node = avl_left_rotation(node);
                 }
             }
 
