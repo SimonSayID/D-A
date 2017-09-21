@@ -8,8 +8,8 @@
 #include "../main.h"
 
 struct list_s {
-    int data;
     list_t *next;
+    int data;
 };
 
 list_t *list_init(int data);

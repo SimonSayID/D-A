@@ -26,19 +26,24 @@ void list_insert(list_t *list, int data) {
 list_t *list_delete(list_t *list, int data) {
     list_t *save = list;
     list_t *head = list;
-    while (list != NULL) {
+
+    if (list != NULL) {
+
         if (list->data == data) {
-            list_t *temp = list;
-            save->next = list->next;
-            free(temp);
-            if (list == head) {
-                return save->next;
-            } else {
+            save = list->next;
+            free(list);
+            return save;
+        }
+
+        while (list->next != NULL) {
+            if (list->data == data) {
+                save->next = list->next;
+                free(list);
                 return head;
+            } else {
+                save = list;
+                list = list->next;
             }
-        } else {
-            save = list;
-            list = list->next;
         }
     }
 }
