@@ -2,7 +2,7 @@
 
 int main() {
 //    list_test();
-    stack_test();
+//    stack_test();
 //    queue_test();
 //    sort_test();
 //    hash_test();
@@ -11,5 +11,6 @@ int main() {
 //    size_t num = 998;
 //    num = next_prime(num);
 //    printf("%ld\n", num);
+    bm_heap_test();
     return 0;
 }

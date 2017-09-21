@@ -15,7 +15,7 @@ typedef struct rb_node_s                rb_node_t;
 typedef struct hash_list_node_s         hash_list_node_t;
 typedef struct hash_table_s             hash_table_t;
 typedef struct bm_heap_node_s           bm_heap_node_t;
-
+typedef struct bm_heap_s                bm_heap_t;
 #ifndef max
 int max(int a, int b);
 #endif

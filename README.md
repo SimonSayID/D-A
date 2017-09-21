@@ -40,6 +40,22 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - test (detail see queue_test.c)
 
+## binomial heap (二项堆)
+
+- init 初始化
+
+- merge 合并
+
+- find_min 查找最小
+
+- insert 插入
+
+- delete_min 删除最小
+
+- destroy 销毁
+
+- test (detail see bm_heap_test.c)
+
 ## avl tree （AVL 树） (non-recursive 非递归)
 
 - init 初始化
