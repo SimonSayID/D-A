@@ -91,11 +91,29 @@ static void merge(int *A, int left, int right) {
     free(x);
 }
 
-void merge_sort(int *A, int n) {
-    if (n < 2)
+void merge_sort(int *A, int N) {
+    if (N < 2)
         return;
-    int center = n / 2;
+    int center = N / 2;
     merge_sort(A, center);
-    merge_sort(A + center, n - center);
-    merge(A, n, center);
+    merge_sort(A + center, N - center);
+    merge(A, N, center);
 }
+
+void shell_sort(int *A, int N) {
+    int h = 1;
+    while (h < N / 3) {
+        h = 3 * h + 1;
+    }
+    while (h >= 1) {
+        for (int i = h; i < N; ++i) {
+            for (int j = i; j >= h && A[j] <= A[j - h]; j -= h) {
+                int temp = A[j];
+                A[j] = A[j - h];
+                A[j - h] = temp;
+            }
+        }
+        h = h / 3;
+    }
+}
+

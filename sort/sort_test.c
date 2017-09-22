@@ -84,10 +84,27 @@ static void merge_sort_test() {
     }
 }
 
+static void shell_sort_test() {
+    int A[] = {1, 9, 5, 8, 7, 6, 3, 2, 4, 0};
+    int s1 = sizeof(A) / sizeof(int);
+    shell_sort(A, s1);
+    for (int i = 0; i < s1; ++i) {
+        assert(A[i] == i);
+    }
+
+    int B[] = {1, 4, 5, 8, 7, 6, 3, 2, 0};
+    int s2 = sizeof(B) / sizeof(int);
+    shell_sort(B, s2);
+    for (int i = 0; i < s2; ++i) {
+        assert(B[i] == i);
+    }
+}
+
 void sort_test() {
-    bubble_sort_test();
-    select_sort_test();
-    insert_sort_test();
-    quick_sort_test();
-    merge_sort_test();
+//    bubble_sort_test();
+//    select_sort_test();
+//    insert_sort_test();
+//    quick_sort_test();
+//    merge_sort_test();
+    shell_sort_test();
 }
