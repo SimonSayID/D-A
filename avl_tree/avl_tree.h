@@ -5,6 +5,8 @@
 #ifndef ALG_AVL_TREE_H
 #define ALG_AVL_TREE_H
 
+#include "../main.h"
+
 typedef struct avl_node_s               avl_node_t;
 
 struct avl_node_s {

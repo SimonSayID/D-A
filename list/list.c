@@ -3,7 +3,6 @@
 //
 
 #include "list.h"
-#include "../main.h"
 
 list_t *list_init(int data) {
     list_t *list = (list_t *) calloc(1, sizeof(list_t));

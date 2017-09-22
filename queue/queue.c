@@ -3,7 +3,6 @@
 //
 
 #include "queue.h"
-#include "../main.h"
 
 queue_t *queue_init() {
     queue_t *queue = (queue_t *) malloc(sizeof(queue_t));

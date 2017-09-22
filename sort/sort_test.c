@@ -3,7 +3,7 @@
 //
 
 #include "sort.h"
-#include "../main.h"
+
 
 static void bubble_sort_test() {
     int A[] = {1, 2, 5, 8, 4, 6, 3, 9, 7, 0};

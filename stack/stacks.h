@@ -5,6 +5,8 @@
 #ifndef ALG_STACKS_H
 #define ALG_STACKS_H
 
+#include "../main.h"
+
 typedef struct stack_s                  stack_t;
 
 struct stack_s {

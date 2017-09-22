@@ -6,6 +6,7 @@
 #define D_A_QUEUE_H
 
 #include "../list/list.h"
+#include "../main.h"
 
 typedef struct queue_s                  queue_t;
 

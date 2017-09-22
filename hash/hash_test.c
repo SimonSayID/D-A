@@ -3,7 +3,6 @@
 //
 
 #include "hash.h"
-#include "../main.h"
 
 void hash_test() {
     const char *s1 = "helloaqweqwe";

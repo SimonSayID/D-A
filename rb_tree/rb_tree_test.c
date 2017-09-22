@@ -3,7 +3,6 @@
 //
 
 #include "rb_tree.h"
-#include "../main.h"
 
 void rb_tree_test() {
 

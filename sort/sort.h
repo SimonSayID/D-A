@@ -5,6 +5,8 @@
 #ifndef D_A_SORTING_H
 #define D_A_SORTING_H
 
+#include "../main.h"
+
 void bubble_sort(int *A, int N);
 
 void select_sort(int *A, int N);

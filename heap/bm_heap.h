@@ -5,6 +5,8 @@
 #ifndef D_A_HEAP_H
 #define D_A_HEAP_H
 
+#include "../main.h"
+
 typedef struct bm_heap_node_s           bm_heap_node_t;
 typedef struct bm_heap_s                bm_heap_t;
 

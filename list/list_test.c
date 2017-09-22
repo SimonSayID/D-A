@@ -3,7 +3,6 @@
 //
 
 #include "list.h"
-#include "../main.h"
 
 void list_test() {
     list_t *list = list_init(4);

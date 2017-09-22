@@ -3,7 +3,6 @@
 //
 
 #include "sort.h"
-#include "../main.h"
 
 void bubble_sort(int *A, int N) {
     for (int i = 0; i < N; ++i) {

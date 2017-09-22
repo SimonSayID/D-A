@@ -3,7 +3,6 @@
 //
 
 #include "avl_tree.h"
-#include "../main.h"
 
 void avl_tree_test() {
 

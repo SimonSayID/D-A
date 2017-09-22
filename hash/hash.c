@@ -3,7 +3,6 @@
 //
 
 #include "hash.h"
-#include "../main.h"
 
 uintptr_t hash_key(const char *str) {
     uintptr_t key = 0;

@@ -3,7 +3,6 @@
 //
 
 #include "bm_heap.h"
-#include "../main.h"
 
 void bm_heap_test() {
 

@@ -5,6 +5,8 @@
 #ifndef D_A_LIST_H
 #define D_A_LIST_H
 
+#include "../main.h"
+
 typedef struct list_s                   list_t;
 
 struct list_s {

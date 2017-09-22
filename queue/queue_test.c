@@ -3,7 +3,6 @@
 //
 
 #include "queue.h"
-#include "../main.h"
 
 void queue_test() {
     int i;

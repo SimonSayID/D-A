@@ -3,7 +3,6 @@
 //
 
 #include "stacks.h"
-#include "../main.h"
 
 void stack_test() {
     stack_t *stack = stack_init(0);
