@@ -114,4 +114,6 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - merge sort 归并排序
 
+- shell sort 希尔排序
+
 - test 测试 (detail see sort_test.c)
