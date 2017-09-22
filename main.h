@@ -5,15 +5,16 @@
 #ifndef ALG_MAIN_H
 #define ALG_MAIN_H
 
-#include "config.h"
+#include <stdio.h>
+#include <malloc.h>
+#include <assert.h>
+#include <string.h>
+#include <stdint.h>
 
-#include <stacks.h>
-#include <avl_tree.h>
-#include <rb_tree.h>
-#include <sort.h>
-#include <list.h>
-#include <queue.h>
-#include <hash.h>
-#include <bm_heap.h>
+#ifndef max
+int max(int a, int b);
+#endif
+
+size_t next_prime(size_t num);
 
 #endif //ALG_MAIN_H

@@ -5,7 +5,7 @@
 #ifndef D_A_RB_TREE_H
 #define D_A_RB_TREE_H
 
-#include "../main.h"
+typedef struct rb_node_s                rb_node_t;
 
 /*
  * color:
@@ -32,7 +32,5 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data);
 rb_node_t *rb_tree_delete(rb_node_t *node, int data);
 
 rb_node_t *rb_tree_search(rb_node_t *node, int data);
-
-void rb_tree_test();
 
 #endif //D_A_RB_TREE_H

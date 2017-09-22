@@ -2,6 +2,7 @@
 // Created by simon on 17-9-8.
 //
 
+#include "sort.h"
 #include "../main.h"
 
 void bubble_sort(int *A, int N) {

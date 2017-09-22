@@ -2,7 +2,7 @@
 // Created by simon on 17-9-9.
 //
 
-
+#include "hash.h"
 #include "../main.h"
 
 void hash_test() {

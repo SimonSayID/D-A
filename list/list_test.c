@@ -2,6 +2,7 @@
 // Created by simon on 17-9-9.
 //
 
+#include "list.h"
 #include "../main.h"
 
 void list_test() {

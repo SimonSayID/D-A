@@ -5,7 +5,9 @@
 #ifndef D_A_QUEUE_H
 #define D_A_QUEUE_H
 
-#include "../main.h"
+#include "../list/list.h"
+
+typedef struct queue_s                  queue_t;
 
 struct queue_s {
     list_t *head;
@@ -21,7 +23,5 @@ void dequeue(queue_t *queue);
 queue_t *destroy_queue(queue_t *queue);
 
 int is_empty(queue_t *queue);
-
-void queue_test();
 
 #endif //D_A_QUEUE_H

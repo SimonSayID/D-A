@@ -5,7 +5,7 @@
 #ifndef ALG_AVL_TREE_H
 #define ALG_AVL_TREE_H
 
-#include "../main.h"
+typedef struct avl_node_s               avl_node_t;
 
 struct avl_node_s {
     avl_node_t    *left;
@@ -22,7 +22,5 @@ avl_node_t* avl_insert(avl_node_t *node, int data);
 avl_node_t* avl_delete(avl_node_t *node, int data);
 
 avl_node_t* avl_search(avl_node_t *node, int data);
-
-void avl_tree_test();
 
 #endif //ALG_AVL_TREE_H

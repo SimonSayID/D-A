@@ -2,8 +2,8 @@
 // Created by simon on 17-9-9.
 //
 
+#include "hash.h"
 #include "../main.h"
-
 
 uintptr_t hash_key(const char *str) {
     uintptr_t key = 0;

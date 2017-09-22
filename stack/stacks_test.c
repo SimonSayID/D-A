@@ -2,6 +2,7 @@
 // Created by Simon on 2017/9/14.
 //
 
+#include "stacks.h"
 #include "../main.h"
 
 void stack_test() {

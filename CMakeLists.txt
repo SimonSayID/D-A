@@ -3,17 +3,6 @@ project(D-A)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(
-        "${PROJECT_SOURCE_DIR}/avl_tree/"
-        "${PROJECT_SOURCE_DIR}/stack/"
-        "${PROJECT_SOURCE_DIR}/rb_tree/"
-        "${PROJECT_SOURCE_DIR}/sort/"
-        "${PROJECT_SOURCE_DIR}/list/"
-        "${PROJECT_SOURCE_DIR}/queue/"
-        "${PROJECT_SOURCE_DIR}/hash/"
-        "${PROJECT_SOURCE_DIR}/heap/"
-)
-
 file(
         GLOB SOURCE
         "avl_tree/*.h"

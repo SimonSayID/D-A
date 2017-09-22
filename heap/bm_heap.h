@@ -5,7 +5,8 @@
 #ifndef D_A_HEAP_H
 #define D_A_HEAP_H
 
-#include "../main.h"
+typedef struct bm_heap_node_s           bm_heap_node_t;
+typedef struct bm_heap_s                bm_heap_t;
 
 struct bm_heap_data_s {
     int             key;
@@ -40,6 +41,6 @@ void bm_heap_delete_min(bm_heap_t* bm_heap);
 
 bm_heap_t* bm_heap_destroy(bm_heap_t* bm_heap);
 
-void bm_heap_test();
+
 
 #endif //D_A_HEAP_H

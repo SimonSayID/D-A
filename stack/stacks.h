@@ -5,7 +5,7 @@
 #ifndef ALG_STACKS_H
 #define ALG_STACKS_H
 
-#include "../main.h"
+typedef struct stack_s                  stack_t;
 
 struct stack_s {
     int             data;
@@ -19,7 +19,5 @@ stack_t* stacks_push(stack_t *stack, int data);
 stack_t* stack_pop(stack_t *stack);
 
 void stack_top(stack_t *stacks, int *value);
-
-void stack_test();
 
 #endif //ALG_STACKS_H

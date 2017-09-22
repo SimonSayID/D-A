@@ -7,6 +7,9 @@
 
 #include "../main.h"
 
+typedef struct hash_list_node_s         hash_list_node_t;
+typedef struct hash_table_s             hash_table_t;
+
 #define HASH_TABLE_SIZE 2
 
 struct hash_list_node_s {
@@ -31,7 +34,5 @@ void hash_delete(hash_table_t *ht, const char *str);
 hash_list_node_t *hash_find(hash_table_t *ht, const char *str);
 
 hash_table_t *hash_destroy(hash_table_t *ht);
-
-void hash_test();
 
 #endif //D_A_HASH_H

@@ -5,7 +5,7 @@
 #ifndef D_A_LIST_H
 #define D_A_LIST_H
 
-#include "../main.h"
+typedef struct list_s                   list_t;
 
 struct list_s {
     list_t *next;
@@ -19,7 +19,5 @@ void list_insert(list_t *list, int data);
 list_t *list_delete(list_t *list, int data);
 
 list_t *list_find(list_t *list, int data);
-
-void list_test();
 
 #endif //D_A_LIST_H

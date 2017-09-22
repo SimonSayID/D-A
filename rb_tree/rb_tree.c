@@ -2,6 +2,7 @@
 // Created by simon on 17-8-29.
 //
 
+#include "rb_tree.h"
 #include "../main.h"
 
 static rb_node_t *rb_left_rotation(rb_node_t *node) {

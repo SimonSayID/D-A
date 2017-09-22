@@ -2,6 +2,7 @@
 // Created by simon on 17-9-8.
 //
 
+#include "sort.h"
 #include "../main.h"
 
 static void bubble_sort_test() {
@@ -101,10 +102,10 @@ static void shell_sort_test() {
 }
 
 void sort_test() {
-//    bubble_sort_test();
-//    select_sort_test();
-//    insert_sort_test();
-//    quick_sort_test();
-//    merge_sort_test();
+    bubble_sort_test();
+    select_sort_test();
+    insert_sort_test();
+    quick_sort_test();
+    merge_sort_test();
     shell_sort_test();
 }

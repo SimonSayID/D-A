@@ -2,6 +2,7 @@
 // Created by simon on 8/27/17.
 //
 
+#include "stacks.h"
 #include "../main.h"
 
 stack_t* stack_init(int data){

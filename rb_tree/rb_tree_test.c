@@ -2,6 +2,7 @@
 // Created by simon on 17-8-31.
 //
 
+#include "rb_tree.h"
 #include "../main.h"
 
 void rb_tree_test() {

@@ -2,7 +2,7 @@
 // Created by simon on 8/27/17.
 //
 
-#include "config.h"
+#include "main.h"
 
 // conflict with windows header
 #ifndef max

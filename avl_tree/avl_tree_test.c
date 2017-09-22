@@ -2,6 +2,7 @@
 // Created by simon on 17-8-31.
 //
 
+#include "avl_tree.h"
 #include "../main.h"
 
 void avl_tree_test() {

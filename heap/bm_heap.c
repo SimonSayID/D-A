@@ -2,6 +2,7 @@
 // Created by simon on 17-9-12.
 //
 
+#include "bm_heap.h"
 #include "../main.h"
 
 static void __bm_heap_nail(bm_heap_node_t *root, bm_heap_node_t* child) {

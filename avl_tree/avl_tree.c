@@ -2,6 +2,7 @@
 // Created by simon on 8/27/17.
 //
 
+#include "avl_tree.h"
 #include "../main.h"
 
 static int avl_height(avl_node_t *node){

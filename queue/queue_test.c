@@ -2,6 +2,7 @@
 // Created by simon on 17-9-9.
 //
 
+#include "queue.h"
 #include "../main.h"
 
 void queue_test() {

@@ -17,6 +17,4 @@ void merge_sort(int *A, int N);
 
 void shell_sort(int *A, int N);
 
-void sort_test();
-
 #endif //D_A_SORTING_H
