@@ -94,35 +94,28 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         new->parent = new->left = new->right = NULL;
         new->height = 0;
 
+        int exist = 1;
+        avl_node_t **pos = NULL;
+
         while (node->data != data) {
             new->parent = node;
-            if (node->data > data) {
-                if (node->left == NULL) {
-                    node->left = new;
-                    break;
-                }
-                node = node->left;
-            } else {
-                if (node->right == NULL) {
-                    node->right = new;
-                    break;
-                }
-                node = node->right;
+            pos = (node->data > data) ? &node->left : &node->right;
+            if (*pos == NULL) {
+                exist = 0;
+                *pos = new;
+                break;
             }
-        }
-        if (node->data == data) {
-            free(new);
-            goto end;
+            node = *pos;
         }
 
-        node = new;
+        if (exist == 1) {
+            free(new);
+            goto exit;
+        }
 
         while (node != NULL) {
-
             avl_node_t *save = node;
-
             node = avl_re_balance(node);
-
             avl_node_t *p = node->parent;
             if (p != NULL) {
                 if (p->left == save) {
@@ -133,13 +126,14 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             } else {
                 goto end;
             }
-
             node = node->parent;
         }
 
         end:
             return node;
     }
+
+exit:
     return NULL;
 }
 
