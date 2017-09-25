@@ -3,7 +3,6 @@
 //
 
 #include "avl_tree.h"
-#include "../main.h"
 
 static int avl_height(avl_node_t *node){
     if (node != NULL) {
@@ -95,7 +94,7 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
         new->parent = new->left = new->right = NULL;
         new->height = 0;
 
-        do {
+        while (node->data != data) {
             new->parent = node;
             if (node->data > data) {
                 if (node->left == NULL) {
@@ -110,7 +109,7 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
                 }
                 node = node->right;
             }
-        } while (node->data != data);
+        }
         if (node->data == data) {
             free(new);
             goto end;
