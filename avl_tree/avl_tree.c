@@ -96,7 +96,6 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
 
         int exist = 1;
         avl_node_t **pos = NULL;
-
         while (node->data != data) {
             new->parent = node;
             pos = (node->data > data) ? &node->left : &node->right;
@@ -107,7 +106,6 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             }
             node = *pos;
         }
-
         if (exist == 1) {
             free(new);
             goto exit;
@@ -228,8 +226,8 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
 
                 reb = reb->parent;
             }
-
         }
+
     end:
         return node;
     }
