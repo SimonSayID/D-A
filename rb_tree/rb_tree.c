@@ -229,8 +229,9 @@ void rb_tree_delete(rb_tree_t *tree, int data) {
             }
         }
 
+        free(pos);
+
         if (red == 1) {
-            free(pos);
             return;
         }
 
