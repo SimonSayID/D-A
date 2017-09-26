@@ -80,9 +80,6 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - test 测试 (detail see rb_tree_test.c)
 
-
->红黑树使用了父节点，但是没有用哨兵节点（sentinel），另外测试代码基本涵盖所有情况
-
 ## hash（散列表）
 
 - init 初始化
