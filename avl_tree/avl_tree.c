@@ -115,7 +115,9 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
 
         while (node != NULL) {
             avl_node_t *save = node;
+
             node = avl_re_balance(node);
+
             avl_node_t *p = node->parent;
             if (p != NULL) {
                 if (p->left == save) {
@@ -126,6 +128,7 @@ avl_node_t* avl_insert(avl_node_t *node, int data){
             } else {
                 goto end;
             }
+
             node = node->parent;
         }
 
@@ -207,7 +210,6 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
             free(del);
 
             while (reb != NULL) {
-
                 avl_node_t *save = reb;
 
                 reb = avl_re_balance(reb);
@@ -223,6 +225,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
                     node = reb;
                     goto end;
                 }
+
                 reb = reb->parent;
             }
 
