@@ -85,24 +85,20 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
 
         rb_node_t *temp = node;
 
-        do {
+        int exist = 1;
+        rb_node_t **pos = NULL;
+        while (temp->data != data) {
             new->parent = temp;
-            if (temp->data > data) {
-                if (temp->left == NULL) {
-                    temp->left = new;
-                    break;
-                }
-                temp = temp->left;
-            } else {
-                if (temp->right == NULL) {
-                    temp->right = new;
-                    break;
-                }
-                temp = temp->right;
+            pos = (temp->data > data) ? &temp->left : &temp->right;
+            if (*pos == NULL) {
+                exist = 0;
+                *pos = new;
+                break;
             }
-        } while (temp->data != data);
-
-        if (temp->data == data) {
+            temp = *pos;
+        }
+        if (exist == 1) {
+            free(new);
             return NULL;
         }
 
