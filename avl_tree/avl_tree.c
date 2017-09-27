@@ -4,14 +4,14 @@
 
 #include "avl_tree.h"
 
-static int avl_height(avl_node_t *node){
+static int avl_height(avl_node_t *node) {
     if (node != NULL) {
         return node->height;
     }
     return -1;
 }
 
-static avl_node_t* avl_left_rotation(avl_node_t *node){
+static avl_node_t* avl_left_rotation(avl_node_t *node) {
     node->right->parent = node->parent;
     avl_node_t *temp = node->right;
 
@@ -29,7 +29,7 @@ static avl_node_t* avl_left_rotation(avl_node_t *node){
     return temp;
 }
 
-static avl_node_t* avl_right_rotation(avl_node_t *node){
+static avl_node_t* avl_right_rotation(avl_node_t *node) {
     node->left->parent = node->parent;
     avl_node_t *temp = node->left;
 
@@ -47,12 +47,12 @@ static avl_node_t* avl_right_rotation(avl_node_t *node){
     return temp;
 }
 
-static avl_node_t* avl_left_right_rotation(avl_node_t *node){
+static avl_node_t* avl_left_right_rotation(avl_node_t *node) {
     node->left = avl_left_rotation(node->left);
     return avl_right_rotation(node);
 }
 
-static avl_node_t* avl_right_left_rotation(avl_node_t *node){
+static avl_node_t* avl_right_left_rotation(avl_node_t *node) {
     node->right = avl_right_rotation(node->right);
     return avl_left_rotation(node);
 }
@@ -86,7 +86,7 @@ avl_node_t* avl_tree_init(int data) {
     return root;
 }
 
-avl_node_t* avl_insert(avl_node_t *node, int data){
+avl_node_t* avl_insert(avl_node_t *node, int data) {
     if (node != NULL) {
 
         avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
@@ -138,7 +138,7 @@ exit:
     return NULL;
 }
 
-avl_node_t* avl_delete(avl_node_t *node, int data){
+avl_node_t* avl_delete(avl_node_t *node, int data) {
     if (node != NULL) {
 
         avl_node_t *del = node;
@@ -233,7 +233,7 @@ avl_node_t* avl_delete(avl_node_t *node, int data){
     }
 }
 
-avl_node_t* avl_search(avl_node_t *node, int data){
+avl_node_t* avl_search(avl_node_t *node, int data) {
     while (node != NULL && node->data != data){
         if (node->data > data) {
             node = node->left;
