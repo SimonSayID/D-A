@@ -8,7 +8,6 @@
 #include "../main.h"
 
 typedef struct rb_node_s                rb_node_t;
-typedef struct rb_tree_s                rb_tree_t;
 
 /*
  * color:
@@ -16,30 +15,24 @@ typedef struct rb_tree_s                rb_tree_t;
  * */
 
 struct rb_node_s {
-    rb_node_t       *parent;
-    rb_node_t       *left;
-    rb_node_t       *right;
-    int             data;
-    int             color;
-};
-
-struct rb_tree_s {
-    rb_node_t       *root;
-    rb_node_t       *sentinel;
+    rb_node_t *parent;
+    rb_node_t *left;
+    rb_node_t *right;
+    int data;
+    int color;
 };
 
 #define rb_color_red(node)              ((node)->color = 1)
 #define rb_color_black(node)            ((node)->color = 0)
 #define rb_color_is_red(node)           ((node)->color)
 #define rb_color_is_black(node)         (!rb_color_is_red(node))
-#define rb_color_copy(a, b)              ((a)->color = (b)->color)
 
-rb_tree_t *rb_tree_init();
+rb_node_t *rb_tree_init(int data);
 
-void rb_tree_insert(rb_tree_t *tree, int data);
+rb_node_t *rb_tree_insert(rb_node_t *node, int data);
 
-void rb_tree_delete(rb_tree_t *tree, int data);
+rb_node_t *rb_tree_delete(rb_node_t *node, int data);
 
-rb_node_t *rb_tree_search(rb_tree_t *tree, int data);
+rb_node_t *rb_tree_search(rb_node_t *node, int data);
 
 #endif //D_A_RB_TREE_H
