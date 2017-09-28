@@ -26,6 +26,8 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - pop 出栈
 
+- test 测试 (detail see stacks_test.c)
+
 ## queue（队列）
 
 - init 初始化
