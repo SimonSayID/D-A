@@ -78,7 +78,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - search 搜索 (return NULL if the node does not exist)
 
-- test 测试 (detail see rb_tree_test.c)
+- test 测试 (detail see sp_tree_test.c)
 
 ## splay tree （伸展树） (non-recursive 非递归)
 
