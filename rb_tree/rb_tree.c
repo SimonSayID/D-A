@@ -162,8 +162,9 @@ rb_node_t *rb_tree_insert(rb_node_t *node, int data) {
         }
 
         node->color = 0;
+        return node;
     }
-    return node;
+    return NULL;
 }
 
 rb_node_t *rb_tree_delete(rb_node_t *node, int data) {
@@ -371,13 +372,14 @@ rb_node_t *rb_tree_delete(rb_node_t *node, int data) {
             }
 
         }
+
+        end:
+        if (node != NULL) {
+            rb_color_black(node);
+            node->parent = NULL;
+        }
     }
 
-    end:
-    if (node != NULL) {
-        rb_color_black(node);
-        node->parent = NULL;
-    }
     return node;
 }
 
