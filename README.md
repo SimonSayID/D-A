@@ -60,7 +60,7 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - init 初始化
 
-- insert 插入 (duplicate node won't insert)
+- insert 插入 (insert duplicate node will return NULL)
 
 - delete 删除 (remain unchanged if the node want to delete does not exist)
 
@@ -72,7 +72,19 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - init 初始化
 
-- insert 插入 (duplicate node won't insert)
+- insert 插入 (insert duplicate node will return NULL)
+
+- delete 删除 (remain unchanged if the node want to delete does not exist)
+
+- search 搜索 (return NULL if the node does not exist)
+
+- test 测试 (detail see rb_tree_test.c)
+
+## splay tree （伸展树） (non-recursive 非递归)
+
+- init 初始化
+
+- insert 插入 (insert duplicate node will return NULL)
 
 - delete 删除 (remain unchanged if the node want to delete does not exist)
 

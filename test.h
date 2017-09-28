@@ -13,5 +13,6 @@ void bm_heap_test();
 void hash_test();
 void sort_test();
 void rb_tree_test();
+void sp_tree_test();
 
 #endif //D_A_TEST_H

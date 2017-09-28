@@ -11,6 +11,8 @@ file(
         "stack/*.c"
         "rb_tree/*.h"
         "rb_tree/*.c"
+        "sp_tree/*.h"
+        "sp_tree/*.c"
         "sort/*.h"
         "sort/*.c"
         "list/*.h"
