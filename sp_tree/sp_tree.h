@@ -8,6 +8,7 @@
 #include "../main.h"
 
 typedef struct sp_node_s sp_node_t;
+typedef struct sp_tree_s sp_tree_t;
 
 struct sp_node_s {
     sp_node_t       *left;
@@ -16,12 +17,16 @@ struct sp_node_s {
     int             data;
 };
 
-sp_node_t* sp_tree_init(int data);
+struct sp_tree_s {
+    sp_node_t *root;
+};
 
-sp_node_t* sp_insert(sp_node_t* node, int data);
+sp_tree_t* sp_tree_init();
 
-sp_node_t* sp_delete(sp_node_t* node, int data);
+void sp_insert(sp_tree_t* tree, int data);
 
-sp_node_t* sp_search(sp_node_t* node, int data);
+void sp_delete(sp_tree_t* tree, int data);
+
+sp_node_t* sp_search(sp_tree_t* tree, int data);
 
 #endif //D_A_SP_TREE_H

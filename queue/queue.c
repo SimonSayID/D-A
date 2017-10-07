@@ -10,9 +10,9 @@ queue_t *queue_init() {
     return queue;
 }
 
-void enqueue(queue_t *queue, int data) {
+void queue_enqueue(queue_t *queue, int data) {
     if (queue != NULL) {
-        list_t *new = (list_t *) malloc(sizeof(list_t));
+        list_node_t *new = (list_node_t *) malloc(sizeof(list_node_t));
         new->data = data;
         new->next = NULL;
         if (queue->head == NULL) {
@@ -27,27 +27,29 @@ void enqueue(queue_t *queue, int data) {
     }
 }
 
-void dequeue(queue_t *queue) {
+int queue_dequeue(queue_t *queue) {
     if (queue->head != NULL) {
-        list_t *temp = queue->head;
+        list_node_t *temp = queue->head;
         queue->head = queue->head->next;
         if (queue->head == NULL) {
             queue->tail = NULL;
         }
+        int num = temp->data;
         free(temp);
+        return num;
     }
 }
 
 queue_t *destroy_queue(queue_t *queue) {
     while (queue->head != NULL) {
-        dequeue(queue);
+        queue_dequeue(queue);
     }
     free(queue);
     queue = NULL;
     return queue;
 }
 
-int is_empty(queue_t *queue) {
+int queue_is_empty(queue_t *queue) {
     return queue->head == NULL && queue->tail == NULL;
 }
 

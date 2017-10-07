@@ -78,162 +78,147 @@ static avl_node_t* avl_re_balance(avl_node_t *node) {
     return node;
 }
 
-avl_node_t* avl_tree_init(int data) {
-    avl_node_t* root = (avl_node_t *)malloc(sizeof(avl_node_t));
-    root->data = data;
-    root->parent = root->left = root->right = NULL;
-    root->height = 0;
-    return root;
+avl_tree_t* avl_tree_init() {
+    avl_tree_t* tree = (avl_tree_t *)malloc(sizeof(avl_tree_t));
+    tree->root = NULL;
+    return tree;
 }
 
-avl_node_t* avl_insert(avl_node_t *node, int data) {
-    if (node != NULL) {
+void avl_insert(avl_tree_t* tree, int data) {
+    avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
+    new->data = data;
+    new->parent = new->left = new->right = NULL;
+    new->height = 0;
 
-        avl_node_t *new = (avl_node_t *)malloc(sizeof(avl_node_t));
-        new->data = data;
-        new->parent = new->left = new->right = NULL;
-        new->height = 0;
+    if (tree->root == NULL) {
+        tree->root = new;
+        return;
+    }
 
-        int exist = 1;
-        avl_node_t **pos = NULL;
-        while (node->data != data) {
-            new->parent = node;
-            pos = (node->data > data) ? &node->left : &node->right;
-            if (*pos == NULL) {
-                exist = 0;
-                *pos = new;
-                break;
+    avl_node_t *node = tree->root;
+
+    int exist = 1;
+    avl_node_t **pos = NULL;
+    while (node->data != data) {
+        new->parent = node;
+        pos = (node->data > data) ? &node->left : &node->right;
+        if (*pos == NULL) {
+            exist = 0;
+            *pos = new;
+            break;
+        }
+        node = *pos;
+    }
+    if (exist == 1) {
+        free(new);
+    }
+
+    while (node != NULL) {
+        avl_node_t *save = node;
+
+        node = avl_re_balance(node);
+
+        avl_node_t *p = node->parent;
+        if (p != NULL) {
+            if (p->left == save) {
+                p->left = node;
+            } else {
+                p->right = node;
             }
-            node = *pos;
-        }
-        if (exist == 1) {
-            free(new);
-            goto exit;
+        } else {
+            tree->root = node;
         }
 
-        while (node != NULL) {
-            avl_node_t *save = node;
+        node = node->parent;
+    }
+}
 
-            node = avl_re_balance(node);
+void avl_delete(avl_tree_t *tree, int data) {
+    avl_node_t *node = tree->root;
+    avl_node_t *del = node;
+    avl_node_t *reb = NULL;
 
-            avl_node_t *p = node->parent;
+    while (del != NULL && del->data != data) {
+        if (del->data > data) {
+            del = del->left;
+        } else {
+            del = del->right;
+        }
+    }
+
+    if (del != NULL) {
+        if (del->left != NULL && del->right != NULL) {
+            avl_node_t *predecessor = del->left;
+            while (predecessor->right != NULL) {
+                predecessor = predecessor->right;
+            }
+
+            del->data = predecessor->data;
+            if (predecessor->parent->right == predecessor) {
+                predecessor->parent->right = predecessor->left;
+            } else {
+                predecessor->parent->left = predecessor->left;
+            }
+
+            reb = predecessor->parent;
+            del = predecessor;
+        } else if (del->left == NULL && del->right == NULL) {
+            if (del->parent != NULL) {
+                if (del->parent->left == del) {
+                    del->parent->left = NULL;
+                } else {
+                    del->parent->right = NULL;
+                }
+            } else {
+                tree->root = NULL;
+            }
+            reb = del->parent;
+        } else {
+            if (del->parent != NULL) {
+                if (del->parent->left == del) {
+                    del->parent->left = del->left != NULL ? del->left : del->right;
+                    reb = del->parent->left;
+                } else {
+                    del->parent->right = del->left != NULL ? del->left : del->right;
+                    reb = del->parent->right;
+                }
+            } else {
+                node = del->left != NULL ? del->left : del->right;
+                node->parent = NULL;
+                tree->root = node;
+            }
+
+            if (reb != NULL) {
+                reb->parent = del->parent;
+            }
+        }
+
+        free(del);
+
+        while (reb != NULL) {
+            avl_node_t *save = reb;
+
+            reb = avl_re_balance(reb);
+
+            avl_node_t *p = reb->parent;
             if (p != NULL) {
                 if (p->left == save) {
-                    p->left = node;
+                    p->left = reb;
                 } else {
-                    p->right = node;
+                    p->right = reb;
                 }
             } else {
-                goto end;
+                node = reb;
+                tree->root = node;
             }
 
-            node = node->parent;
+            reb = reb->parent;
         }
-
-        end:
-            return node;
-    }
-
-exit:
-    return NULL;
-}
-
-avl_node_t* avl_delete(avl_node_t *node, int data) {
-    if (node != NULL) {
-
-        avl_node_t *del = node;
-        avl_node_t *reb = NULL;
-
-        while (del != NULL && del->data != data) {
-            if (del->data > data) {
-                del = del->left;
-            } else {
-                del = del->right;
-            }
-        }
-
-        if (del != NULL) {
-
-            if (del->left != NULL && del->right != NULL) {
-                avl_node_t *predecessor = del->left;
-                while (predecessor->right != NULL) {
-                    predecessor = predecessor->right;
-                }
-
-                del->data = predecessor->data;
-
-                if (predecessor->parent->right == predecessor) {
-                    predecessor->parent->right = predecessor->left;
-                } else {
-                    predecessor->parent->left = predecessor->left;
-                }
-
-                reb = predecessor->parent;
-                del = predecessor;
-
-            } else if (del->left == NULL && del->right == NULL) {
-
-                if (del->parent != NULL) {
-                    if (del->parent->left == del) {
-                        del->parent->left = NULL;
-                    } else {
-                        del->parent->right = NULL;
-                    }
-                } else {
-                    node = NULL;
-                }
-                reb = del->parent;
-
-            } else {
-
-                if (del->parent != NULL) {
-                    if (del->parent->left == del) {
-                        del->parent->left = del->left != NULL ? del->left : del->right;
-                        reb = del->parent->left;
-                    } else {
-                        del->parent->right = del->left != NULL ? del->left : del->right;
-                        reb = del->parent->right;
-                    }
-                } else {
-                    node = del->left != NULL ? del->left : del->right;
-                    node->parent = NULL;
-                }
-
-                if (reb != NULL) {
-                    reb->parent = del->parent;
-                }
-
-            }
-
-            free(del);
-
-            while (reb != NULL) {
-                avl_node_t *save = reb;
-
-                reb = avl_re_balance(reb);
-
-                avl_node_t *p = reb->parent;
-                if (p != NULL) {
-                    if (p->left == save) {
-                        p->left = reb;
-                    } else {
-                        p->right = reb;
-                    }
-                } else {
-                    node = reb;
-                    goto end;
-                }
-
-                reb = reb->parent;
-            }
-        }
-
-    end:
-        return node;
     }
 }
 
-avl_node_t* avl_search(avl_node_t *node, int data) {
+avl_node_t* avl_search(avl_tree_t *tree, int data) {
+    avl_node_t *node = tree->root;
     while (node != NULL && node->data != data){
         if (node->data > data) {
             node = node->left;

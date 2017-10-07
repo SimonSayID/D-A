@@ -7,22 +7,27 @@
 
 #include "../main.h"
 
-typedef struct avl_node_s               avl_node_t;
+typedef struct avl_node_s avl_node_t;
+typedef struct avl_tree_s avl_tree_t;
 
 struct avl_node_s {
-    avl_node_t    *left;
-    avl_node_t    *right;
-    avl_node_t    *parent;
-    int           data;
-    int           height;
+    avl_node_t *left;
+    avl_node_t *right;
+    avl_node_t *parent;
+    int data;
+    int height;
 };
 
-avl_node_t* avl_tree_init(int data);
+struct avl_tree_s {
+    avl_node_t *root;
+};
 
-avl_node_t* avl_insert(avl_node_t *node, int data);
+avl_tree_t* avl_tree_init();
 
-avl_node_t* avl_delete(avl_node_t *node, int data);
+void avl_insert(avl_tree_t *tree, int data);
 
-avl_node_t* avl_search(avl_node_t *node, int data);
+void avl_delete(avl_tree_t *tree, int data);
+
+avl_node_t* avl_search(avl_tree_t *tree, int data);
 
 #endif //ALG_AVL_TREE_H

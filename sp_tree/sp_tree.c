@@ -84,93 +84,89 @@ static sp_node_t* sp_splay(sp_node_t *node) {
     return node;
 }
 
-sp_node_t* sp_tree_init(int data) {
-    sp_node_t *root = (sp_node_t *)malloc(sizeof(sp_node_t));
-    root->data = data;
-    root->parent = root->left = root->right = NULL;
-    return root;
+sp_tree_t* sp_tree_init() {
+    sp_tree_t *tree = (sp_tree_t *)malloc(sizeof(sp_tree_t));
+    tree->root = NULL;
+    return tree;
 }
 
-sp_node_t* sp_insert(sp_node_t* node, int data) {
-    if (node != NULL) {
+void sp_insert(sp_tree_t* tree, int data) {
+    sp_node_t *node = tree->root;
+    sp_node_t *new = (sp_node_t *)malloc(sizeof(sp_node_t));
+    new->data = data;
+    new->left = new->right = NULL;
 
-        sp_node_t *new = (sp_node_t *)malloc(sizeof(sp_node_t));
-        new->data = data;
-        new->left = new->right = NULL;
-
-        sp_node_t **pos = NULL;
-        int exist = 1;
-        while (node->data != data) {
-            pos = (node->data > data) ? &node->left : &node->right;
-            if (*pos == NULL) {
-                exist = 0;
-                *pos = new;
-                break;
-            }
-            node = *pos;
-        }
-        new->parent = node;
-        if (exist == 1) {
-            free(new);
-            return NULL;
-        }
-
-        node = sp_splay(new);
-
-        return node;
+    if (node == NULL) {
+        new->parent = NULL;
+        tree->root = new;
+        return;
     }
+
+    sp_node_t **pos = NULL;
+    int exist = 1;
+    while (node->data != data) {
+        pos = (node->data > data) ? &node->left : &node->right;
+        if (*pos == NULL) {
+            exist = 0;
+            *pos = new;
+            break;
+        }
+        node = *pos;
+    }
+    new->parent = node;
+    if (exist == 1) {
+        free(new);
+    }
+
+    tree->root = sp_splay(new);
 }
 
-sp_node_t* sp_delete(sp_node_t* node, int data) {
-    if (node != NULL) {
-        sp_node_t *temp = node;
-        while (temp != NULL && temp->data != data) {
-            if (temp->data > data) {
-                temp = temp->left;
-            } else {
-                temp = temp->right;
-            }
+void sp_delete(sp_tree_t* tree, int data) {
+    sp_node_t* node = tree->root;
+    sp_node_t *temp = node;
+    while (temp != NULL && temp->data != data) {
+        if (temp->data > data) {
+            temp = temp->left;
+        } else {
+            temp = temp->right;
         }
+    }
 
-        if (temp != NULL) {
-            temp = sp_splay(temp);
-            sp_node_t *ls = temp->left;
-            sp_node_t *rs = temp->right;
-            free(temp);
-            if (ls != NULL) {
-                ls->parent = NULL;
-                if (ls->right != NULL && rs != NULL) {
-                    while (ls->right != NULL) {
-                        ls = ls->right;
-                    }
-                    ls = sp_splay(ls);
+    if (temp != NULL) {
+        temp = sp_splay(temp);
+        sp_node_t *ls = temp->left;
+        sp_node_t *rs = temp->right;
+        free(temp);
+        if (ls != NULL) {
+            ls->parent = NULL;
+            if (ls->right != NULL && rs != NULL) {
+                while (ls->right != NULL) {
+                    ls = ls->right;
                 }
-                if (rs != NULL) {
-                    ls->right = rs;
-                }
-                node = ls;
-            } else {
-                node = rs;
+                ls = sp_splay(ls);
             }
             if (rs != NULL) {
-                rs->parent = ls;
+                ls->right = rs;
             }
+            tree->root = ls;
+        } else {
+            tree->root = rs;
         }
-
-        return node;
+        if (rs != NULL) {
+            rs->parent = ls;
+        }
     }
 }
 
-sp_node_t* sp_search(sp_node_t* node, int data) {
-    if (node != NULL) {
-        sp_node_t **pos;
-        while (node != NULL && node->data != data) {
-            pos = (node->data > data) ? &node->left : &node->right;
-            node = *pos;
-        }
-        if (node != NULL) {
-            sp_splay(node);
-        }
-        return node;
+sp_node_t* sp_search(sp_tree_t* tree, int data) {
+    sp_node_t *node = tree->root;
+    sp_node_t **pos;
+    while (node != NULL && node->data != data) {
+        pos = (node->data > data) ? &node->left : &node->right;
+        node = *pos;
     }
+    if (node != NULL) {
+        tree->root = sp_splay(node);
+    }
+    return node;
 }

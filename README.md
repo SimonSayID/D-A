@@ -26,17 +26,17 @@ Data structure &amp; Algorithm （数据结构与算法）
 
 - pop 出栈
 
-- test 测试 (detail see stacks_test.c)
+- test 测试 (detail see stack_test.c)
 
 ## queue（队列）
 
 - init 初始化
 
-- enqueue 进队
+- queue_enqueue 进队
 
-- dequeue 出队
+- queue_dequeue 出队
 
-- is_empty 是否为空
+- queue_is_empty 是否为空
 
 - destroy_queue 销毁队列
 

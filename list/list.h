@@ -7,19 +7,25 @@
 
 #include "../main.h"
 
-typedef struct list_s                   list_t;
+typedef struct list_node_s list_node_t;
+typedef struct list_s list_t;
 
-struct list_s {
-    list_t *next;
+struct list_node_s {
+    list_node_t *next;
     int data;
 };
 
-list_t *list_init(int data);
+struct list_s {
+    list_node_t *head;
+    list_node_t *tail;
+};
 
-void list_insert(list_t *list, int data);
+list_t* list_init();
 
-list_t *list_delete(list_t *list, int data);
+void list_insert(list_t* list, int data);
 
-list_t *list_find(list_t *list, int data);
+void list_delete(list_t* list, int data);
+
+list_node_t* list_find(list_t* list, int data);
 
 #endif //D_A_LIST_H

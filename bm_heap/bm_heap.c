@@ -4,14 +4,14 @@
 
 #include "bm_heap.h"
 
-static void __bm_heap_nail(bm_heap_node_t *root, bm_heap_node_t* child) {
+static void bm_heap_merge_helper(bm_heap_node_t *root, bm_heap_node_t *child) {
     child->parent = root;
     child->next = root->child;
     root->child = child;
     root->degree++;
 }
 
-static bm_heap_node_t* __bm_heap_union(bm_heap_node_t *a, bm_heap_node_t *b) {
+static bm_heap_node_t* bm_heap_merge_core(bm_heap_node_t *a, bm_heap_node_t *b) {
 
     bm_heap_node_t *head = NULL;
     bm_heap_node_t **chain = &head;
@@ -36,7 +36,7 @@ static bm_heap_node_t* __bm_heap_union(bm_heap_node_t *a, bm_heap_node_t *b) {
     return head;
 }
 
-static bm_heap_node_t* __bm_heap_reverse(bm_heap_node_t *node) {
+static bm_heap_node_t* bm_heap_reverse(bm_heap_node_t *node) {
 
     bm_heap_node_t *tail = NULL;
     bm_heap_node_t *next = NULL;
@@ -69,7 +69,7 @@ static void bm_heap_union(bm_heap_t* bm_heap, bm_heap_node_t* node) {
         return;
     }
 
-    head = __bm_heap_union(head, node);
+    head = bm_heap_merge_core(head, node);
 
     current = head;
     prev = NULL;
@@ -83,14 +83,14 @@ static void bm_heap_union(bm_heap_t* bm_heap, bm_heap_node_t* node) {
             current = next;
         } else if (current->key < next->key) {
             current->next = next->next;
-            __bm_heap_nail(current, next);
+            bm_heap_merge_helper(current, next);
         } else {
             if (prev != NULL) {
                 prev->next = next;
             } else {
                 head = next;
             }
-            __bm_heap_nail(next, current);
+            bm_heap_merge_helper(next, current);
             current = next;
         }
 
@@ -160,7 +160,7 @@ void bm_heap_delete_min(bm_heap_t* bm_heap) {
         r = min->child;
         free(min);
         bm_heap->size -= 1;
-        bm_heap_union(bm_heap, __bm_heap_reverse(r));
+        bm_heap_union(bm_heap, bm_heap_reverse(r));
     }
 }
 

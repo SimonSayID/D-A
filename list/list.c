@@ -4,56 +4,56 @@
 
 #include "list.h"
 
-list_t *list_init(int data) {
-    list_t *list = (list_t *) calloc(1, sizeof(list_t));
-    list->data = data;
-    list->next = NULL;
+list_t* list_init() {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+    list->head = NULL;
+    list->tail = NULL;
     return list;
 }
 
-void list_insert(list_t *list, int data) {
-    if (list != NULL) {
-        list_t *node = (list_t *) calloc(1, sizeof(list_t));
-        node->data = data;
-        node->next = NULL;
-        while (list->next != NULL) {
-            list = list->next;
-        }
-        list->next = node;
+void list_insert(list_t* list, int data) {
+    list_node_t *node = (list_node_t *)malloc(sizeof(list_node_t));
+    node->data = data;
+    node->next = NULL;
+    if (list->head == NULL) {
+        list->head = node;
+        list->tail = node;
+    } else {
+        list->tail->next = node;
+        list->tail = node;
     }
 }
 
-list_t *list_delete(list_t *list, int data) {
-    list_t *save = list;
-    list_t *head = list;
-
-    if (list != NULL) {
-
-        if (list->data == data) {
-            save = list->next;
-            free(list);
-            return save;
-        }
-
-        while (list->next != NULL) {
-            if (list->data == data) {
-                save->next = list->next;
-                free(list);
-                return head;
-            } else {
-                save = list;
-                list = list->next;
+void list_delete(list_t* list, int data) {
+    list_node_t *head = list->head;
+    list_node_t *save = NULL;
+    while (head != NULL && head->data != data) {
+        save = head;
+        head = head->next;
+    }
+    if (head != NULL) {
+        if (save == NULL) {
+            list->head = list->head->next;
+            if (list->head == NULL) {
+                list->tail = NULL;
+            }
+        } else {
+            save->next = head->next;
+            if (head->next == NULL) {
+                list->tail = save;
             }
         }
+        free(head);
     }
 }
 
-list_t *list_find(list_t *list, int data) {
-    while (list != NULL) {
-        if (list->data == data) {
-            return list;
+list_node_t *list_find(list_t* list, int data) {
+    list_node_t *head = list->head;
+    while (head != NULL) {
+        if (head->data == data) {
+            return head;
         }
-        list = list->next;
+        head = head->next;
     }
     return NULL;
 }
