@@ -46,41 +46,42 @@ void graph_u_add_edge(graph_u_t *graph_u, int v, int w) {
     }
 }
 
-void dfs(graph_u_t *graph_u, int start, int *marked) {
-    marked[start] = 1;
-    printf("%d\n",start);
-    edge_u_t *adj = graph_u->array[start].head;
-    while (adj != NULL) {
-        int num = adj->data;
-        if (!marked[num]) {
-            dfs(graph_u, num, marked);
-        }
-        adj = adj->next;
-    }
-}
-
 int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
-//    stack_frame_t *stack = stack_init(start);
+    stack_t *stack = stack_init();
     int len = graph_u->vn + 1;
     int marked[len];
-    int j = 0;
+    int r_pos = 0;
+
     for (int i = 0; i < len; ++i) {
         marked[i] = 0;
     }
-    marked[start] = 1;
-    result[j] = start;
-    j++;
 
-    edge_u_t *adj = graph_u->array[start].head;
-    while (adj != NULL) {
-        int num = adj->data;
-        if (marked[num]) {
-            adj = adj->next;
-        } else {
-            marked[num] = 1;
-            result[j] = num;
-            j++;
-            adj = graph_u->array[num].head;
+    for (int j = 0; j < len; ++j) {
+        if (marked[j]) {
+            continue;
+        }
+        stack_push(stack, j);
+        marked[j] = 1;
+        result[r_pos] = j;
+        r_pos++;
+        while (!stack_is_empty(stack)) {
+            int current = stack_top(stack);
+            edge_u_t *adj = graph_u->array[current].head;
+            while (adj != NULL) {
+                int v = adj->data;
+                if (!marked[v]) {
+                    stack_push(stack, v);
+                    marked[v] = 1;
+                    result[r_pos] = v;
+                    r_pos++;
+                    break;
+                }
+                adj = adj->next;
+            }
+            if (stack_top(stack) != current) {
+                continue;
+            }
+            stack_pop(stack);
         }
     }
 

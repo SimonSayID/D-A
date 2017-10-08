@@ -17,7 +17,7 @@ void graph_test() {
     graph_u_add_edge(graph_u, 5, 6);
     int num = graph_u->vn + 1;
     int *result = (int *)malloc(num * sizeof(int));
-    result = breadth_first_search(graph_u, 0, result);
+    result = depth_first_search(graph_u, 0, result);
     for (int i = 0; i < num; ++i) {
         printf("%d\n",result[i]);
     }
