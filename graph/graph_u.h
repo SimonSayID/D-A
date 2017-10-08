@@ -33,8 +33,6 @@ graph_u_t* graph_u_init(int v_num);
 
 void graph_u_add_edge(graph_u_t *graph_u, int v, int w);
 
-void dfs(graph_u_t *graph_u, int start, int *marked);
-
 int* depth_first_search(graph_u_t *graph_u, int start, int *result);
 
 int* breadth_first_search(graph_u_t *graph_u, int start, int *result);

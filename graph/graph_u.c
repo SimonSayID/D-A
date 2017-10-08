@@ -2,7 +2,7 @@
 // Created by Simon on 2017/10/7.
 //
 
-#include "graph.h"
+#include "graph_u.h"
 
 graph_u_t* graph_u_init(int v_num) {
     graph_u_t *graph_u = (graph_u_t *)malloc(sizeof(graph_u_t));
@@ -56,7 +56,7 @@ int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
         marked[i] = 0;
     }
 
-    for (int j = 0; j < len; ++j) {
+    for (int j = start; j < len; ++j) {
         if (marked[j]) {
             continue;
         }
@@ -92,14 +92,17 @@ int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
     queue_t *queue = queue_init();
     int len = graph_u->vn + 1;
     int marked[len];
-    int j = 0;
+    int r_pos = 0;
+
     for (int i = 0; i < len; ++i) {
         marked[i] = 0;
     }
+
     queue_enqueue(queue, start);
     marked[start] = 1;
-    result[j] = start;
-    j++;
+    result[r_pos] = start;
+    r_pos++;
+
     while (!queue_is_empty(queue)) {
         int v = queue_dequeue(queue);
         edge_u_t *adj = graph_u->array[v].head;
@@ -107,13 +110,14 @@ int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
             int num = adj->data;
             if (!marked[num]) {
                 marked[num] = 1;
-                result[j] = num;
-                j++;
+                result[r_pos] = num;
+                r_pos++;
                 queue_enqueue(queue, num);
             }
             adj = adj->next;
         }
     }
     free(queue);
+
     return result;
 }

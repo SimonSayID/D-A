@@ -2,7 +2,7 @@
 // Created by Simon on 2017/10/7.
 //
 
-#include "graph.h"
+#include "graph_u.h"
 
 void graph_test() {
     graph_u_t *graph_u = graph_u_init(7);
@@ -19,6 +19,11 @@ void graph_test() {
     int *result = (int *)malloc(num * sizeof(int));
     result = depth_first_search(graph_u, 0, result);
     for (int i = 0; i < num; ++i) {
-        printf("%d\n",result[i]);
+        printf("%d ",result[i]);
+    }
+    printf("\n");
+    result = breadth_first_search(graph_u, 0, result);
+    for (int i = 0; i < num; ++i) {
+        printf("%d ",result[i]);
     }
 }
