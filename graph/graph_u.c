@@ -85,6 +85,8 @@ int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
         }
     }
 
+    free(stack);
+
     return result;
 }
 
@@ -117,6 +119,7 @@ int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
             adj = adj->next;
         }
     }
+
     free(queue);
 
     return result;
