@@ -25,5 +25,6 @@ void stack_test() {
     stack_pop(stack);
     stack_pop(stack);
     assert(stack->top == NULL);
+    assert(stack_is_empty(stack) == 1);
     free(stack);
 }

@@ -31,3 +31,10 @@ void stack_pop(stack_t *stack) {
 int stack_top(stack_t *stacks) {
     return stacks->top->data;
 }
+
+int stack_is_empty(stack_t *stack) {
+    if (stack->top != NULL) {
+        return 0;
+    }
+    return 1;
+}

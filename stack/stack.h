@@ -27,4 +27,6 @@ void stack_pop(stack_t *stack);
 
 int stack_top(stack_t *stacks);
 
+int stack_is_empty(stack_t *stack);
+
 #endif //ALG_STACKS_H
