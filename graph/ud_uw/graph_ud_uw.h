@@ -29,12 +29,12 @@ struct graph_ud_uw_s {
     int en;
 };
 
-graph_ud_uw_t* graph_u_init(int v_num);
+graph_ud_uw_t* graph_ud_uw_init(int v_num);
 
-void graph_u_add_edge(graph_ud_uw_t *graph_u, int v, int w);
+void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w);
 
-int* depth_first_search(graph_ud_uw_t *graph_u, int start, int *result);
+int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
 
-int* breadth_first_search(graph_ud_uw_t *graph_u, int start, int *result);
+int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
 
 #endif //D_A_GRAPH_H

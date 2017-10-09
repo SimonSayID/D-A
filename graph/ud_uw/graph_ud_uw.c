@@ -4,51 +4,51 @@
 
 #include "graph_ud_uw.h"
 
-graph_ud_uw_t* graph_u_init(int v_num) {
-    graph_ud_uw_t *graph_u = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
-    graph_u->array = (vertex_ud_uw_t *)malloc(v_num  * sizeof(vertex_ud_uw_t));
+graph_ud_uw_t* graph_ud_uw_init(int v_num) {
+    graph_ud_uw_t *graph_ud_uw = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
+    graph_ud_uw->array = (vertex_ud_uw_t *)malloc(v_num  * sizeof(vertex_ud_uw_t));
     for (int i = 0; i <= v_num; ++i) {
-        graph_u->array[i].head = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
-        graph_u->array[i].tail = NULL;
+        graph_ud_uw->array[i].head = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
+        graph_ud_uw->array[i].tail = NULL;
     }
-    graph_u->vn = v_num;
-    graph_u->en = 0;
-    return graph_u;
+    graph_ud_uw->vn = v_num;
+    graph_ud_uw->en = 0;
+    return graph_ud_uw;
 }
 
-void graph_u_add_edge(graph_ud_uw_t *graph_u, int v, int w) {
-    if (graph_u != NULL) {
-        if (graph_u->array[v].tail == NULL) {
-            graph_u->array[v].head->data = w;
-            graph_u->array[v].head->next = NULL;
-            graph_u->array[v].tail = graph_u->array[v].head;
+void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w) {
+    if (graph_ud_uw != NULL) {
+        if (graph_ud_uw->array[v].tail == NULL) {
+            graph_ud_uw->array[v].head->data = w;
+            graph_ud_uw->array[v].head->next = NULL;
+            graph_ud_uw->array[v].tail = graph_ud_uw->array[v].head;
         } else {
             edge_ud_uw_t *a = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
             a->data = w;
             a->next = NULL;
-            graph_u->array[v].tail->next = a;
-            graph_u->array[v].tail = a;
+            graph_ud_uw->array[v].tail->next = a;
+            graph_ud_uw->array[v].tail = a;
         }
 
-        if (graph_u->array[w].tail == NULL) {
-            graph_u->array[w].head->data = v;
-            graph_u->array[w].head->next = NULL;
-            graph_u->array[w].tail = graph_u->array[w].head;
+        if (graph_ud_uw->array[w].tail == NULL) {
+            graph_ud_uw->array[w].head->data = v;
+            graph_ud_uw->array[w].head->next = NULL;
+            graph_ud_uw->array[w].tail = graph_ud_uw->array[w].head;
         } else {
             edge_ud_uw_t *b = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
             b->data = v;
             b->next = NULL;
-            graph_u->array[w].tail->next = b;
-            graph_u->array[w].tail = b;
+            graph_ud_uw->array[w].tail->next = b;
+            graph_ud_uw->array[w].tail = b;
         }
 
-        graph_u->en += 1;
+        graph_ud_uw->en += 1;
     }
 }
 
-int* depth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
+int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result) {
     stack_t *stack = stack_init();
-    int len = graph_u->vn + 1;
+    int len = graph_ud_uw->vn + 1;
     int marked[len];
     int r_pos = 0;
 
@@ -66,7 +66,7 @@ int* depth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
         r_pos++;
         while (!stack_is_empty(stack)) {
             int current = stack_top(stack);
-            edge_ud_uw_t *adj = graph_u->array[current].head;
+            edge_ud_uw_t *adj = graph_ud_uw->array[current].head;
             while (adj != NULL) {
                 int v = adj->data;
                 if (!marked[v]) {
@@ -90,9 +90,9 @@ int* depth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
     return result;
 }
 
-int* breadth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
+int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result) {
     queue_t *queue = queue_init();
-    int len = graph_u->vn + 1;
+    int len = graph_ud_uw->vn + 1;
     int marked[len];
     int r_pos = 0;
 
@@ -107,7 +107,7 @@ int* breadth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
 
     while (!queue_is_empty(queue)) {
         int v = queue_dequeue(queue);
-        edge_ud_uw_t *adj = graph_u->array[v].head;
+        edge_ud_uw_t *adj = graph_ud_uw->array[v].head;
         while (adj != NULL) {
             int num = adj->data;
             if (!marked[num]) {
