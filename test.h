@@ -11,6 +11,7 @@ void stack_test();
 void avl_tree_test();
 void rb_tree_test();
 void sp_tree_test();
+void b_heap_test();
 void bm_heap_test();
 void hash_test();
 void sort_test();

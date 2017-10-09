@@ -124,7 +124,3 @@ int* breadth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
 
     return result;
 }
-
-int* shortest_path(graph_ud_uw_t *graph_u, int start, int *result) {
-    return breadth_first_search(graph_u, start, result);
-}

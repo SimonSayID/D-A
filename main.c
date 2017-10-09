@@ -9,6 +9,7 @@ int main() {
 //    avl_tree_test();
 //    rb_tree_test();
 //    sp_tree_test();
+//    b_heap_test();
 //    bm_heap_test();
 //    hash_test();
 //    graph_ud_uw_test();

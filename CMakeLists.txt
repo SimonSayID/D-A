@@ -17,6 +17,8 @@ file(
         "tree/rb/*.c"
         "tree/splay/*.h"
         "tree/splay/*.c"
+        "heap/binary/*.h"
+        "heap/binary/*.c"
         "heap/binomial/*.h"
         "heap/binomial/*.c"
         "hash/*.h"
