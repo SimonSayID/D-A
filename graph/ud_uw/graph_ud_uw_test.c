@@ -2,10 +2,10 @@
 // Created by Simon on 2017/10/7.
 //
 
-#include "graph_u.h"
+#include "graph_ud_uw.h"
 
-void graph_test() {
-    graph_u_t *graph_u = graph_u_init(7);
+void graph_ud_uw_test() {
+    graph_ud_uw_t *graph_u = graph_u_init(7);
     graph_u_add_edge(graph_u, 0, 1);
     graph_u_add_edge(graph_u, 0, 3);
     graph_u_add_edge(graph_u, 0, 4);

@@ -2,13 +2,13 @@
 // Created by Simon on 2017/10/7.
 //
 
-#include "graph_u.h"
+#include "graph_ud_uw.h"
 
-graph_u_t* graph_u_init(int v_num) {
-    graph_u_t *graph_u = (graph_u_t *)malloc(sizeof(graph_u_t));
-    graph_u->array = (vertex_u_t *)malloc(v_num  * sizeof(vertex_u_t));
+graph_ud_uw_t* graph_u_init(int v_num) {
+    graph_ud_uw_t *graph_u = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
+    graph_u->array = (vertex_ud_uw_t *)malloc(v_num  * sizeof(vertex_ud_uw_t));
     for (int i = 0; i <= v_num; ++i) {
-        graph_u->array[i].head = (edge_u_t *)malloc(sizeof(edge_u_t));
+        graph_u->array[i].head = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
         graph_u->array[i].tail = NULL;
     }
     graph_u->vn = v_num;
@@ -16,14 +16,14 @@ graph_u_t* graph_u_init(int v_num) {
     return graph_u;
 }
 
-void graph_u_add_edge(graph_u_t *graph_u, int v, int w) {
+void graph_u_add_edge(graph_ud_uw_t *graph_u, int v, int w) {
     if (graph_u != NULL) {
         if (graph_u->array[v].tail == NULL) {
             graph_u->array[v].head->data = w;
             graph_u->array[v].head->next = NULL;
             graph_u->array[v].tail = graph_u->array[v].head;
         } else {
-            edge_u_t *a = (edge_u_t *)malloc(sizeof(edge_u_t));
+            edge_ud_uw_t *a = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
             a->data = w;
             a->next = NULL;
             graph_u->array[v].tail->next = a;
@@ -35,7 +35,7 @@ void graph_u_add_edge(graph_u_t *graph_u, int v, int w) {
             graph_u->array[w].head->next = NULL;
             graph_u->array[w].tail = graph_u->array[w].head;
         } else {
-            edge_u_t *b = (edge_u_t *)malloc(sizeof(edge_u_t));
+            edge_ud_uw_t *b = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
             b->data = v;
             b->next = NULL;
             graph_u->array[w].tail->next = b;
@@ -46,7 +46,7 @@ void graph_u_add_edge(graph_u_t *graph_u, int v, int w) {
     }
 }
 
-int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
+int* depth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
     stack_t *stack = stack_init();
     int len = graph_u->vn + 1;
     int marked[len];
@@ -66,7 +66,7 @@ int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
         r_pos++;
         while (!stack_is_empty(stack)) {
             int current = stack_top(stack);
-            edge_u_t *adj = graph_u->array[current].head;
+            edge_ud_uw_t *adj = graph_u->array[current].head;
             while (adj != NULL) {
                 int v = adj->data;
                 if (!marked[v]) {
@@ -90,7 +90,7 @@ int* depth_first_search(graph_u_t *graph_u, int start, int *result) {
     return result;
 }
 
-int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
+int* breadth_first_search(graph_ud_uw_t *graph_u, int start, int *result) {
     queue_t *queue = queue_init();
     int len = graph_u->vn + 1;
     int marked[len];
@@ -107,7 +107,7 @@ int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
 
     while (!queue_is_empty(queue)) {
         int v = queue_dequeue(queue);
-        edge_u_t *adj = graph_u->array[v].head;
+        edge_ud_uw_t *adj = graph_u->array[v].head;
         while (adj != NULL) {
             int num = adj->data;
             if (!marked[num]) {
@@ -123,4 +123,8 @@ int* breadth_first_search(graph_u_t *graph_u, int start, int *result) {
     free(queue);
 
     return result;
+}
+
+int* shortest_path(graph_ud_uw_t *graph_u, int start, int *result) {
+    return breadth_first_search(graph_u, start, result);
 }

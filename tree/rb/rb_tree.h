@@ -5,7 +5,7 @@
 #ifndef D_A_RB_TREE_H
 #define D_A_RB_TREE_H
 
-#include "../main.h"
+#include "../../main.h"
 
 typedef struct rb_node_s                rb_node_t;
 

@@ -14,6 +14,7 @@ void sp_tree_test();
 void bm_heap_test();
 void hash_test();
 void sort_test();
-void graph_test();
+void graph_ud_uw_test();
+void graph_ud_w_test();
 
 #endif //D_A_TEST_H

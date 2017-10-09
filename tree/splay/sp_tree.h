@@ -5,7 +5,7 @@
 #ifndef D_A_SP_TREE_H
 #define D_A_SP_TREE_H
 
-#include "../main.h"
+#include "../../main.h"
 
 typedef struct sp_node_s sp_node_t;
 typedef struct sp_tree_s sp_tree_t;
