@@ -24,7 +24,7 @@ struct vertex_ud_uw_s {
 };
 
 struct graph_ud_uw_s {
-    vertex_ud_uw_t *array;
+    vertex_ud_uw_t **array;
     int vn;
     int en;
 };
@@ -36,5 +36,7 @@ void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w);
 int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
 
 int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
+
+void graph_ud_uw_destroy(graph_ud_uw_t *graph_ud_uw);
 
 #endif //D_A_GRAPH_H

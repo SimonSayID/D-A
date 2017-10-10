@@ -5,21 +5,21 @@
 #include "graph_ud_uw.h"
 
 void graph_ud_uw_test() {
-    graph_ud_uw_t *graph_u = graph_ud_uw_init(7);
-    graph_ud_uw_add_edge(graph_u, 0, 1);
-    graph_ud_uw_add_edge(graph_u, 0, 3);
-    graph_ud_uw_add_edge(graph_u, 0, 4);
-    graph_ud_uw_add_edge(graph_u, 1, 5);
-    graph_ud_uw_add_edge(graph_u, 1, 6);
-    graph_ud_uw_add_edge(graph_u, 2, 4);
-    graph_ud_uw_add_edge(graph_u, 2, 5);
-    graph_ud_uw_add_edge(graph_u, 4, 7);
-    graph_ud_uw_add_edge(graph_u, 5, 6);
+    graph_ud_uw_t *graph_ud_uw = graph_ud_uw_init(7);
+    graph_ud_uw_add_edge(graph_ud_uw, 0, 1);
+    graph_ud_uw_add_edge(graph_ud_uw, 0, 3);
+    graph_ud_uw_add_edge(graph_ud_uw, 0, 4);
+    graph_ud_uw_add_edge(graph_ud_uw, 1, 5);
+    graph_ud_uw_add_edge(graph_ud_uw, 1, 6);
+    graph_ud_uw_add_edge(graph_ud_uw, 2, 4);
+    graph_ud_uw_add_edge(graph_ud_uw, 2, 5);
+    graph_ud_uw_add_edge(graph_ud_uw, 4, 7);
+    graph_ud_uw_add_edge(graph_ud_uw, 5, 6);
 
-    int num = graph_u->vn + 1;
+    int num = graph_ud_uw->vn + 1;
     int *result = (int *)malloc(num * sizeof(int));
 
-    result = graph_ud_uw_depth_first_search(graph_u, 0, result);
+    result = graph_ud_uw_depth_first_search(graph_ud_uw, 0, result);
     assert(result[0] == 0);
     assert(result[1] == 1);
     assert(result[2] == 5);
@@ -29,7 +29,7 @@ void graph_ud_uw_test() {
     assert(result[6] == 6);
     assert(result[7] == 3);
 
-    result = graph_ud_uw_breadth_first_search(graph_u, 0, result);
+    result = graph_ud_uw_breadth_first_search(graph_ud_uw, 0, result);
     assert(result[0] == 0);
     assert(result[1] == 1);
     assert(result[2] == 3);
@@ -38,4 +38,6 @@ void graph_ud_uw_test() {
     assert(result[5] == 6);
     assert(result[6] == 2);
     assert(result[7] == 7);
+
+    graph_ud_uw_destroy(graph_ud_uw);
 }

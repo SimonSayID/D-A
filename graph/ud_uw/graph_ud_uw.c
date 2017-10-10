@@ -6,10 +6,12 @@
 
 graph_ud_uw_t* graph_ud_uw_init(int v_num) {
     graph_ud_uw_t *graph_ud_uw = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
-    graph_ud_uw->array = (vertex_ud_uw_t *)malloc(v_num  * sizeof(vertex_ud_uw_t));
+    int len = v_num + 1; // because we need to visit graph_ud_uw->array[v_num]
+    graph_ud_uw->array = (vertex_ud_uw_t **)malloc(len  * sizeof(vertex_ud_uw_t *));
     for (int i = 0; i <= v_num; ++i) {
-        graph_ud_uw->array[i].head = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
-        graph_ud_uw->array[i].tail = NULL;
+        graph_ud_uw->array[i] = (vertex_ud_uw_t *)malloc(sizeof(vertex_ud_uw_t));
+        graph_ud_uw->array[i]->head = NULL;
+        graph_ud_uw->array[i]->tail = NULL;
     }
     graph_ud_uw->vn = v_num;
     graph_ud_uw->en = 0;
@@ -17,33 +19,29 @@ graph_ud_uw_t* graph_ud_uw_init(int v_num) {
 }
 
 void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w) {
-    if (graph_ud_uw != NULL) {
-        if (graph_ud_uw->array[v].tail == NULL) {
-            graph_ud_uw->array[v].head->data = w;
-            graph_ud_uw->array[v].head->next = NULL;
-            graph_ud_uw->array[v].tail = graph_ud_uw->array[v].head;
-        } else {
-            edge_ud_uw_t *a = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
-            a->data = w;
-            a->next = NULL;
-            graph_ud_uw->array[v].tail->next = a;
-            graph_ud_uw->array[v].tail = a;
-        }
-
-        if (graph_ud_uw->array[w].tail == NULL) {
-            graph_ud_uw->array[w].head->data = v;
-            graph_ud_uw->array[w].head->next = NULL;
-            graph_ud_uw->array[w].tail = graph_ud_uw->array[w].head;
-        } else {
-            edge_ud_uw_t *b = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
-            b->data = v;
-            b->next = NULL;
-            graph_ud_uw->array[w].tail->next = b;
-            graph_ud_uw->array[w].tail = b;
-        }
-
-        graph_ud_uw->en += 1;
+    edge_ud_uw_t *a = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
+    a->data = w;
+    a->next = NULL;
+    if (graph_ud_uw->array[v]->head == NULL) {
+        graph_ud_uw->array[v]->head = a;
+        graph_ud_uw->array[v]->tail = a;
+    } else {
+        graph_ud_uw->array[v]->tail->next = a;
+        graph_ud_uw->array[v]->tail = a;
     }
+
+    edge_ud_uw_t *b = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
+    b->data = v;
+    b->next = NULL;
+    if (graph_ud_uw->array[w]->head == NULL) {
+        graph_ud_uw->array[w]->head = b;
+        graph_ud_uw->array[w]->tail = b;
+    } else {
+        graph_ud_uw->array[w]->tail->next = b;
+        graph_ud_uw->array[w]->tail = b;
+    }
+
+    graph_ud_uw->en += 1;
 }
 
 int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result) {
@@ -66,7 +64,7 @@ int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *
         r_pos++;
         while (!stack_is_empty(stack)) {
             int current = stack_top(stack);
-            edge_ud_uw_t *adj = graph_ud_uw->array[current].head;
+            edge_ud_uw_t *adj = graph_ud_uw->array[current]->head;
             while (adj != NULL) {
                 int v = adj->data;
                 if (!marked[v]) {
@@ -107,7 +105,7 @@ int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int
 
     while (!queue_is_empty(queue)) {
         int v = queue_dequeue(queue);
-        edge_ud_uw_t *adj = graph_ud_uw->array[v].head;
+        edge_ud_uw_t *adj = graph_ud_uw->array[v]->head;
         while (adj != NULL) {
             int num = adj->data;
             if (!marked[num]) {
@@ -123,4 +121,19 @@ int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int
     free(queue);
 
     return result;
+}
+
+void graph_ud_uw_destroy(graph_ud_uw_t *graph_ud_uw) {
+    int len = graph_ud_uw->vn + 1;
+    for (int i = 0; i < len; ++i) {
+        edge_ud_uw_t *adj = graph_ud_uw->array[i]->head;
+        while (adj != NULL) {
+            edge_ud_uw_t *del = adj;
+            adj = adj->next;
+            free(del);
+        }
+        free(graph_ud_uw->array[i]);
+    }
+    free(graph_ud_uw->array);
+    free(graph_ud_uw);
 }
