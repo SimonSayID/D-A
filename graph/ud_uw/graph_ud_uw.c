@@ -135,7 +135,7 @@ int* graph_ud_uw_connected_components(graph_ud_uw_t *graph_ud_uw, int *result, i
     for (int j = 0; j < len; ++j) {
         if (!marked[j]) {
             //Todo:keep the result separated
-//            dfs(graph_ud_uw, j, marked, result, count);
+            dfs(graph_ud_uw, j, marked, result, count);
             *count += 1;
         }
     }
@@ -145,7 +145,6 @@ int* graph_ud_uw_connected_components(graph_ud_uw_t *graph_ud_uw, int *result, i
 static void dfs(graph_ud_uw_t *graph_ud_uw, int start, int *marked, int *result, int *count) {
     stack_t *stack = stack_init();
     int len = graph_ud_uw->vn + 1;
-    int r_pos = 0;
 
     for (int i = 0; i < len; ++i) {
         marked[i] = 0;
@@ -157,8 +156,7 @@ static void dfs(graph_ud_uw_t *graph_ud_uw, int start, int *marked, int *result,
         int n = stack_top(stack);
         if (!marked[n]) {
             marked[n] = 1;
-            result[r_pos] = n;
-            r_pos++;
+            result[n] = *count;
         }
         edge_ud_uw_t *adj = graph_ud_uw->array[n]->head;
         while (adj != NULL) {
@@ -167,8 +165,7 @@ static void dfs(graph_ud_uw_t *graph_ud_uw, int start, int *marked, int *result,
                 adj = adj->next;
             } else {
                 marked[num] = 1;
-                result[r_pos] = num;
-                r_pos++;
+                result[num] = *count;
                 edge_ud_uw_t *e = adj->next;
                 while (e != NULL) {
                     if (!marked[e->data]) {
