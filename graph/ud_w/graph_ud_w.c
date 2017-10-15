@@ -2,9 +2,8 @@
 // Created by Simon on 2017/10/9.
 //
 
+#include "../../heap/binomial/bm_heap.h"
 #include "graph_ud_w.h"
-
-
 
 graph_ud_w_t* graph_ud_w_init(int vn) {
     graph_ud_w_t *graph_ud_w = (graph_ud_w_t *)malloc(sizeof(graph_ud_w_t));
@@ -27,11 +26,10 @@ void graph_ud_w_add_edge(graph_ud_w_t *graph_ud_w, int v, int w, int weight) {
     a->weight = weight;
     if (graph_ud_w->array[v]->head == NULL) {
         graph_ud_w->array[v]->head = a;
-        graph_ud_w->array[v]->tail = a;
     } else {
         graph_ud_w->array[v]->tail->next = a;
-        graph_ud_w->array[v]->tail = a;
     }
+    graph_ud_w->array[v]->tail = a;
 
     edge_ud_w_t *b = (edge_ud_w_t *)malloc(sizeof(edge_ud_w_t));
     b->data = v;
@@ -39,16 +37,15 @@ void graph_ud_w_add_edge(graph_ud_w_t *graph_ud_w, int v, int w, int weight) {
     b->weight = weight;
     if (graph_ud_w->array[w]->head == NULL) {
         graph_ud_w->array[w]->head = b;
-        graph_ud_w->array[w]->tail = b;
     } else {
         graph_ud_w->array[w]->tail->next = b;
-        graph_ud_w->array[w]->tail = b;
     }
+    graph_ud_w->array[w]->tail = b;
 
     graph_ud_w->en += 1;
 }
 
-int** graph_ud_w_single_source_shortest_path(graph_ud_w_t *graph_ud_w, int start) {
+int** graph_ud_w_minimum_spanning_tree(graph_ud_w_t *graph_ud_w, int start) {
 
 }
 

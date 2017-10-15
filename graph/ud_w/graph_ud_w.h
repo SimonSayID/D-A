@@ -32,7 +32,7 @@ graph_ud_w_t* graph_ud_w_init(int vn);
 
 void graph_ud_w_add_edge(graph_ud_w_t *graph_ud_w, int v, int w, int weight);
 
-int** graph_ud_w_single_source_shortest_path(graph_ud_w_t *graph_ud_w, int start);
+int** graph_ud_w_minimum_spanning_tree(graph_ud_w_t *graph_ud_w, int start);
 
 void graph_ud_w_destroy(graph_ud_w_t *graph_ud_w);
 
