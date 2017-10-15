@@ -4,16 +4,18 @@
 
 #include "graph_ud_uw.h"
 
-graph_ud_uw_t* graph_ud_uw_init(int v_num) {
+static void dfs(graph_ud_uw_t *graph_ud_uw, int start, int *marked, int *result, int *count);
+
+graph_ud_uw_t* graph_ud_uw_init(int vn) {
     graph_ud_uw_t *graph_ud_uw = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
-    int len = v_num + 1; // because we need to visit graph_ud_uw->array[v_num]
+    int len = vn + 1;
     graph_ud_uw->array = (vertex_ud_uw_t **)malloc(len  * sizeof(vertex_ud_uw_t *));
-    for (int i = 0; i <= v_num; ++i) {
+    for (int i = 0; i <= vn; ++i) {
         graph_ud_uw->array[i] = (vertex_ud_uw_t *)malloc(sizeof(vertex_ud_uw_t));
         graph_ud_uw->array[i]->head = NULL;
         graph_ud_uw->array[i]->tail = NULL;
     }
-    graph_ud_uw->vn = v_num;
+    graph_ud_uw->vn = vn;
     graph_ud_uw->en = 0;
     return graph_ud_uw;
 }
@@ -24,22 +26,20 @@ void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w) {
     a->next = NULL;
     if (graph_ud_uw->array[v]->head == NULL) {
         graph_ud_uw->array[v]->head = a;
-        graph_ud_uw->array[v]->tail = a;
     } else {
         graph_ud_uw->array[v]->tail->next = a;
-        graph_ud_uw->array[v]->tail = a;
     }
+    graph_ud_uw->array[v]->tail = a;
 
     edge_ud_uw_t *b = (edge_ud_uw_t *)malloc(sizeof(edge_ud_uw_t));
     b->data = v;
     b->next = NULL;
     if (graph_ud_uw->array[w]->head == NULL) {
         graph_ud_uw->array[w]->head = b;
-        graph_ud_uw->array[w]->tail = b;
     } else {
         graph_ud_uw->array[w]->tail->next = b;
-        graph_ud_uw->array[w]->tail = b;
     }
+    graph_ud_uw->array[w]->tail = b;
 
     graph_ud_uw->en += 1;
 }
@@ -54,35 +54,36 @@ int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *
         marked[i] = 0;
     }
 
-    for (int j = start; j < len; ++j) {
-        if (marked[j]) {
-            continue;
-        }
-        stack_push(stack, j);
-        marked[j] = 1;
-        result[r_pos] = j;
-        r_pos++;
-        while (!stack_is_empty(stack)) {
-            int current = stack_top(stack);
-            edge_ud_uw_t *adj = graph_ud_uw->array[current]->head;
-            while (adj != NULL) {
-                int v = adj->data;
-                if (!marked[v]) {
-                    stack_push(stack, v);
-                    marked[v] = 1;
-                    result[r_pos] = v;
-                    r_pos++;
-                    break;
-                }
-                adj = adj->next;
-            }
-            if (stack_top(stack) != current) {
-                continue;
-            }
-            stack_pop(stack);
-        }
-    }
+    stack_push(stack, start);
 
+    while (!stack_is_empty(stack)) {
+        int n = stack_top(stack);
+        if (!marked[n]) {
+            marked[n] = 1;
+            result[r_pos] = n;
+            r_pos++;
+        }
+        edge_ud_uw_t *adj = graph_ud_uw->array[n]->head;
+        while (adj != NULL) {
+            int num = adj->data;
+            if (marked[num]) {
+                adj = adj->next;
+            } else {
+                marked[num] = 1;
+                result[r_pos] = num;
+                r_pos++;
+                edge_ud_uw_t *e = adj->next;
+                while (e != NULL) {
+                    if (!marked[e->data]) {
+                        stack_push(stack, e->data);
+                    }
+                    e = e->next;
+                }
+                adj = graph_ud_uw->array[num]->head;
+            }
+        }
+        stack_pop(stack);
+    }
     free(stack);
 
     return result;
@@ -121,6 +122,66 @@ int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int
     free(queue);
 
     return result;
+}
+
+int* graph_ud_uw_connected_components(graph_ud_uw_t *graph_ud_uw, int *result, int *count) {
+    int len = graph_ud_uw->vn + 1;
+    int *marked = (int *)malloc(len * sizeof(int));
+    *count = 0;
+    for (int i = 0; i < len; ++i) {
+        marked[i] = 0;
+        result[i] = 0;
+    }
+    for (int j = 0; j < len; ++j) {
+        if (!marked[j]) {
+            //Todo:keep the result separated
+//            dfs(graph_ud_uw, j, marked, result, count);
+            *count += 1;
+        }
+    }
+    return result;
+}
+
+static void dfs(graph_ud_uw_t *graph_ud_uw, int start, int *marked, int *result, int *count) {
+    stack_t *stack = stack_init();
+    int len = graph_ud_uw->vn + 1;
+    int r_pos = 0;
+
+    for (int i = 0; i < len; ++i) {
+        marked[i] = 0;
+    }
+
+    stack_push(stack, start);
+
+    while (!stack_is_empty(stack)) {
+        int n = stack_top(stack);
+        if (!marked[n]) {
+            marked[n] = 1;
+            result[r_pos] = n;
+            r_pos++;
+        }
+        edge_ud_uw_t *adj = graph_ud_uw->array[n]->head;
+        while (adj != NULL) {
+            int num = adj->data;
+            if (marked[num]) {
+                adj = adj->next;
+            } else {
+                marked[num] = 1;
+                result[r_pos] = num;
+                r_pos++;
+                edge_ud_uw_t *e = adj->next;
+                while (e != NULL) {
+                    if (!marked[e->data]) {
+                        stack_push(stack, e->data);
+                    }
+                    e = e->next;
+                }
+                adj = graph_ud_uw->array[num]->head;
+            }
+        }
+        stack_pop(stack);
+    }
+    free(stack);
 }
 
 void graph_ud_uw_destroy(graph_ud_uw_t *graph_ud_uw) {

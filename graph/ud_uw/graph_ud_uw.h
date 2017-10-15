@@ -29,13 +29,15 @@ struct graph_ud_uw_s {
     int en;
 };
 
-graph_ud_uw_t* graph_ud_uw_init(int v_num);
+graph_ud_uw_t* graph_ud_uw_init(int vn);
 
 void graph_ud_uw_add_edge(graph_ud_uw_t *graph_ud_uw, int v, int w);
 
 int* graph_ud_uw_depth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
 
 int* graph_ud_uw_breadth_first_search(graph_ud_uw_t *graph_ud_uw, int start, int *result);
+
+int* graph_ud_uw_connected_components(graph_ud_uw_t *graph_ud_uw, int *result, int *count);
 
 void graph_ud_uw_destroy(graph_ud_uw_t *graph_ud_uw);
 
