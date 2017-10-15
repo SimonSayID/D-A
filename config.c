@@ -4,7 +4,6 @@
 
 #include "main.h"
 
-// conflict with windows header
 #ifndef max
 int max(int a, int b){
     if (a > b) {

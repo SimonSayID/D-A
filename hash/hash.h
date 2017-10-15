@@ -7,8 +7,8 @@
 
 #include "../main.h"
 
-typedef struct hash_list_node_s         hash_list_node_t;
-typedef struct hash_table_s             hash_table_t;
+typedef struct hash_list_node_s hash_list_node_t;
+typedef struct hash_table_s hash_table_t;
 
 #define HASH_TABLE_SIZE 2
 

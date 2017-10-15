@@ -12,7 +12,8 @@ int main() {
 //    b_heap_test();
 //    bm_heap_test();
 //    hash_test();
-//    graph_ud_uw_test();
+    graph_ud_uw_test();
+//    graph_ud_w_test();
 //    size_t num = 998;
 //    num = next_prime(num);
 //    printf("%lld\n", num);
