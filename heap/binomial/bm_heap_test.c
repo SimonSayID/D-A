@@ -37,10 +37,10 @@ void bm_heap_test() {
     bm_heap_insert(h2, v3);
 
     bm_heap_t *h3 = bm_heap_merge(h1, h2);
-    bm_heap_delete_min(h3);
+    int key = bm_heap_delete_min(h3);
+    assert(key == 0);
     min = bm_heap_find_min(h3);
     assert(min->key == 1);
 
-    h3 = bm_heap_destroy(h3);
-    assert(h3 == NULL);
+    bm_heap_destroy(h3);
 }

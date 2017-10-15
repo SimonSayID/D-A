@@ -137,13 +137,15 @@ void bm_heap_insert(bm_heap_t* bm_heap, bm_heap_data_t data) {
     }
 }
 
-void bm_heap_delete_min(bm_heap_t* bm_heap) {
+int bm_heap_delete_min(bm_heap_t* bm_heap) {
+    int k = INT32_MAX;
     if (bm_heap != NULL) {
         bm_heap_node_t *current = bm_heap->head;
         bm_heap_node_t *next = current->next;
         bm_heap_node_t *prev = NULL;
         bm_heap_node_t *min = bm_heap->head;
         bm_heap_node_t *r = NULL;
+
         while (next != NULL) {
             if (current->key > next->key) {
                 min = next;
@@ -158,17 +160,24 @@ void bm_heap_delete_min(bm_heap_t* bm_heap) {
             bm_heap->head = min->next;
         }
         r = min->child;
+        k = min->key;
         free(min);
         bm_heap->size -= 1;
         bm_heap_union(bm_heap, bm_heap_reverse(r));
     }
+    return k;
 }
 
-bm_heap_t* bm_heap_destroy(bm_heap_t* bm_heap) {
+void bm_heap_destroy(bm_heap_t* bm_heap) {
     while (bm_heap->head != NULL) {
         bm_heap_delete_min(bm_heap);
     }
     free(bm_heap);
-    bm_heap = NULL;
-    return bm_heap;
+}
+
+int bm_heap_is_empty(bm_heap_t* bm_heap) {
+    if (bm_heap->head != NULL) {
+        return 0;
+    }
+    return 1;
 }
