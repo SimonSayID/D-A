@@ -60,14 +60,18 @@ void graph_ud_uw_test() {
         }
         components[result[j]]->tail = e;
     }
-    for (int k = 0; k < n; ++k) {
-        edge_ud_uw_t *c = components[k]->head;
-        while (c != NULL) {
-            printf("%d ",c->data);
-            c = c->next;
-        }
-        printf("\n");
+
+    edge_ud_uw_t *c1 = components[0]->head;
+    for (int k = 0; k < 8; ++k) {
+        assert(c1->data == k);
+        c1 = c1->next;
     }
+    edge_ud_uw_t *c2 = components[1]->head;
+    for (int p = 8; p < 10; ++p) {
+        assert(c2->data == p);
+        c2 = c2->next;
+    }
+
 
     graph_ud_uw_destroy(graph_ud_uw);
     for (int l = 0; l < n; ++l) {

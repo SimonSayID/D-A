@@ -10,7 +10,7 @@ graph_ud_uw_t* graph_ud_uw_init(int vn) {
     graph_ud_uw_t *graph_ud_uw = (graph_ud_uw_t *)malloc(sizeof(graph_ud_uw_t));
     int len = vn + 1;
     graph_ud_uw->array = (vertex_ud_uw_t **)malloc(len  * sizeof(vertex_ud_uw_t *));
-    for (int i = 0; i <= vn; ++i) {
+    for (int i = 0; i < len; ++i) {
         graph_ud_uw->array[i] = (vertex_ud_uw_t *)malloc(sizeof(vertex_ud_uw_t));
         graph_ud_uw->array[i]->head = NULL;
         graph_ud_uw->array[i]->tail = NULL;
@@ -134,7 +134,6 @@ int* graph_ud_uw_connected_components(graph_ud_uw_t *graph_ud_uw, int *result, i
     }
     for (int j = 0; j < len; ++j) {
         if (!marked[j]) {
-            //Todo:keep the result separated
             dfs(graph_ud_uw, j, marked, result, count);
             *count += 1;
         }

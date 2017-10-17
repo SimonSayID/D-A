@@ -33,8 +33,4 @@ void graph_d_uw_add_edge(graph_d_uw_t *graph_d_w, int v, int w);
 
 void graph_d_uw_destroy(graph_d_uw_t *graph_d_w);
 
-int* graph_d_uw_depth_first_search(graph_d_uw_t *graph_d_uw, int start, int *result);
-
-int* graph_d_uw_breadth_first_search(graph_d_uw_t *graph_d_uw, int start, int *result);
-
 #endif //D_A_GRAPH_D_UW_H

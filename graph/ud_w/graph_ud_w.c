@@ -45,10 +45,6 @@ void graph_ud_w_add_edge(graph_ud_w_t *graph_ud_w, int v, int w, int weight) {
     graph_ud_w->en += 1;
 }
 
-int** graph_ud_w_minimum_spanning_tree(graph_ud_w_t *graph_ud_w, int start) {
-
-}
-
 void graph_ud_w_destroy(graph_ud_w_t *graph_ud_w) {
     int len = graph_ud_w->vn + 1;
     for (int i = 0; i < len; ++i) {

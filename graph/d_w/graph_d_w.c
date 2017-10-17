@@ -5,15 +5,15 @@
 #include "graph_d_w.h"
 
 graph_d_w_t* graph_d_w_init(int vn) {
-    graph_d_w_t *graph_d_w = (graph_d_w_t *)malloc(sizeof(graph_d_w));
-    graph_d_w->array = (vertex_d_w_t **)malloc(sizeof(vertex_d_w_t *));
+    graph_d_w_t *graph_d_w = (graph_d_w_t *)malloc(sizeof(graph_d_w_t));
     int len = vn + 1;
-    for (int i = 0; i <= len; ++i) {
+    graph_d_w->array = (vertex_d_w_t **)malloc(len * sizeof(vertex_d_w_t *));
+    for (int i = 0; i < len; ++i) {
         graph_d_w->array[i] = (vertex_d_w_t *)malloc(sizeof(vertex_d_w_t));
         graph_d_w->array[i]->head = NULL;
         graph_d_w->array[i]->tail = NULL;
     }
-    graph_d_w->vn = len;
+    graph_d_w->vn = vn;
     graph_d_w->en = 0;
     return graph_d_w;
 }
@@ -21,6 +21,7 @@ graph_d_w_t* graph_d_w_init(int vn) {
 void graph_d_w_add_edge(graph_d_w_t *graph_d_w, int v, int w, int weight) {
     edge_d_w_t *edge = (edge_d_w_t *)malloc(sizeof(edge_d_w_t));
     edge->data = w;
+    edge->next = NULL;
     edge->weight = weight;
 
     if (graph_d_w->array[v]->head == NULL) {

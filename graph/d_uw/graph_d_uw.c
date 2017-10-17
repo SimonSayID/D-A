@@ -5,15 +5,15 @@
 #include "graph_d_uw.h"
 
 graph_d_uw_t* graph_d_uw_init(int vn) {
-    graph_d_uw_t *graph_d_uw = (graph_d_uw_t *)malloc(sizeof(graph_d_uw));
-    graph_d_uw->array = (vertex_d_uw_t **)malloc(sizeof(vertex_d_uw_t *));
+    graph_d_uw_t *graph_d_uw = (graph_d_uw_t *)malloc(sizeof(graph_d_uw_t));
     int len = vn + 1;
-    for (int i = 0; i <= len; ++i) {
+    graph_d_uw->array = (vertex_d_uw_t **)malloc(len * sizeof(vertex_d_uw_t *));
+    for (int i = 0; i < len; ++i) {
         graph_d_uw->array[i] = (vertex_d_uw_t *)malloc(sizeof(vertex_d_uw_t));
         graph_d_uw->array[i]->head = NULL;
         graph_d_uw->array[i]->tail = NULL;
     }
-    graph_d_uw->vn = len;
+    graph_d_uw->vn = vn;
     graph_d_uw->en = 0;
     return graph_d_uw;
 }
@@ -21,6 +21,7 @@ graph_d_uw_t* graph_d_uw_init(int vn) {
 void graph_d_uw_add_edge(graph_d_uw_t *graph_d_uw, int v, int w) {
     edge_d_uw_t *edge = (edge_d_uw_t *)malloc(sizeof(edge_d_uw_t));
     edge->data = w;
+    edge->next = NULL;
 
     if (graph_d_uw->array[v]->head == NULL) {
         graph_d_uw->array[v]->head = edge;
@@ -44,12 +45,4 @@ void graph_d_uw_destroy(graph_d_uw_t *graph_d_uw) {
     }
     free(graph_d_uw->array);
     free(graph_d_uw);
-}
-
-int* graph_d_uw_depth_first_search(graph_d_uw_t *graph_d_uw, int start, int *result) {
-
-}
-
-int* graph_d_uw_breadth_first_search(graph_d_uw_t *graph_d_uw, int start, int *result) {
-
 }

@@ -34,6 +34,4 @@ void graph_d_w_add_edge(graph_d_w_t *graph_d_w, int v, int w, int weight);
 
 void graph_d_w_destroy(graph_d_w_t *graph_d_w);
 
-int** graph_d_w_single_shortest_path(graph_d_w_t *graph_d_w, int start, int **result);
-
 #endif //D_A_GRAPH_D_W_H
