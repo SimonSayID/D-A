@@ -1,6 +1,6 @@
 # Graph
 
-## base operation
+## base
 
 1. init
 
@@ -9,6 +9,8 @@
 3. destroy
 
 4. test
+
+## type
 
 - directed_unweighted
 
