@@ -23,9 +23,11 @@ void stack_push(stack_t *stack, int data) {
 }
 
 void stack_pop(stack_t *stack) {
-    stack_frame_t *temp = stack->top;
-    stack->top = temp->next;
-    free(temp);
+    if (stack->top != NULL) {
+        stack_frame_t *temp = stack->top;
+        stack->top = temp->next;
+        free(temp);
+    }
 }
 
 int stack_top(stack_t *stacks) {

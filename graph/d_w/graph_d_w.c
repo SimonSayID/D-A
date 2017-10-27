@@ -47,7 +47,3 @@ void graph_d_w_destroy(graph_d_w_t *graph_d_w) {
     free(graph_d_w->array);
     free(graph_d_w);
 }
-
-int** graph_d_w_single_shortest_path(graph_d_w_t *graph_d_w, int start, int **result) {
-
-}
